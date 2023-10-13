@@ -1,7 +1,7 @@
 import "./App.css";
 import Home from "./pages/Home/Home";
 import { Routes, Route } from "react-router-dom";
-import { pink, purple } from "@mui/material/colors";
+import { pink } from "@mui/material/colors";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 const THEME = createTheme({
@@ -9,7 +9,7 @@ const THEME = createTheme({
 		fontFamily: `"Roboto Mono", monospace `,
 		fontSize: 16,
 		fontWeightRegular: 10,
-		letterSpacing: ".1rem",
+		letterSpacing: ".5rem",
 	},
 	palette: {
 		primary: {
