@@ -12,8 +12,13 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
+import HomeIcon from "@mui/icons-material/Home";
+import PostAddIcon from "@mui/icons-material/PostAdd";
 
-const pages = ["Home", "Deck"];
+const pages = [
+	{ name: "Home", icon: <HomeIcon sx={{ mr: 1, pb: 0 }} /> },
+	{ name: "Deck", icon: <PostAddIcon sx={{ mr: 1, pb: 0 }} /> },
+];
 const settings = ["Account", "Logout"];
 
 function NavBar() {
@@ -36,8 +41,12 @@ function NavBar() {
 	};
 
 	return (
-		<AppBar position="static">
-			<Container maxWidth="xl">
+		<AppBar
+			position="static"
+			col
+			sx={{ padding: "0", marginBottom: "15px" }}
+		>
+			<Container maxWidth="false">
 				<Toolbar disableGutters>
 					<AdbIcon
 						sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
@@ -48,16 +57,14 @@ function NavBar() {
 						component="a"
 						href="/"
 						sx={{
-							mr: 2,
 							display: { xs: "none", md: "flex" },
-							fontFamily: "monospace",
 							fontWeight: 700,
 							letterSpacing: ".3rem",
 							color: "inherit",
 							textDecoration: "none",
 						}}
 					>
-						LOGO
+						FlashCard
 					</Typography>
 
 					<Box
@@ -96,18 +103,22 @@ function NavBar() {
 						>
 							{pages.map((page) => (
 								<MenuItem
-									key={page}
+									key={page.name}
 									onClick={handleCloseNavMenu}
 								>
+									{page.icon}
 									<Typography textAlign="center">
-										{page}
+										{page.name}
 									</Typography>
 								</MenuItem>
 							))}
 						</Menu>
 					</Box>
 					<AdbIcon
-						sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
+						sx={{
+							display: { xs: "flex", md: "none" },
+							mr: 1,
+						}}
 					/>
 					<Typography
 						variant="h5"
@@ -118,14 +129,14 @@ function NavBar() {
 							mr: 2,
 							display: { xs: "flex", md: "none" },
 							flexGrow: 1,
-							fontFamily: "monospace",
-							fontWeight: 700,
-							letterSpacing: ".3rem",
+							fontSize: 20,
+							fontWeight: 400,
+							letterSpacing: ".0.3rem",
 							color: "inherit",
 							textDecoration: "none",
 						}}
 					>
-						LOGO
+						FlashCard
 					</Typography>
 					<Box
 						sx={{
@@ -141,22 +152,31 @@ function NavBar() {
 					>
 						{pages.map((page) => (
 							<Button
-								key={page}
+								key={page.name}
 								onClick={handleCloseNavMenu}
 								href="/"
 								sx={{
 									my: 2,
 									mr: 5,
-									color: "white",
+									color: "inherit",
 									display: "block",
 								}}
 							>
-								{page}
+								<Typography
+									sx={{
+										mr: 2,
+										display: { xs: "none", md: "flex" },
+										color: "inherit",
+									}}
+								>
+									{page.icon}
+									{page.name}
+								</Typography>
 							</Button>
 						))}
 					</Box>
 
-					<Box sx={{ flexGrow: 0 }}>
+					<Box sx={{ flexGrow: 0, pr: "10px" }}>
 						<Tooltip title="Open settings">
 							<IconButton
 								onClick={handleOpenUserMenu}
