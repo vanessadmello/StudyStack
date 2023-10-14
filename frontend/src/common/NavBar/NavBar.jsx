@@ -34,7 +34,7 @@ function NavBar() {
 		<AppBar
 			position="static"
 			col
-			sx={{ padding: "0", marginBottom: "15px" }}
+			sx={{ padding: "0", marginBottom: "20px" }}
 		>
 			<Container maxWidth="false">
 				<Toolbar disableGutters>
