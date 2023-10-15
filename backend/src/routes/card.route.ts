@@ -2,16 +2,23 @@ import { Express } from "express";
 import {
 	createCardHandler,
 	deleteCardHandler,
-	getCardsHandler,
 	updateCardHandler,
+	getCardsByDeckHandler,
+	getCardsByUserHandler,
 } from "../controllers/card.controller";
+import {
+	cardValidator,
+	idCardValidator,
+	getCardValidator,
+	cardsByUserValidator,
+} from "../validators/card.validator";
 
 function cardRoutes(app: Express) {
-	app.post("/api/card", createCardHandler);
-	app.get("/api/cards", getCardsHandler);
-	app.put("/api/card/:id", updateCardHandler);
-	app.delete("/api/card/:id", deleteCardHandler);
-	
+	app.post("/api/card", cardValidator, createCardHandler);
+	app.get("/api/card", getCardValidator, getCardsByDeckHandler);
+	app.get("/api/cards", cardsByUserValidator, getCardsByUserHandler);
+	app.put("/api/card?:id", idCardValidator, updateCardHandler);
+	app.delete("/api/card?:id", idCardValidator, deleteCardHandler);
 }
 
 export default cardRoutes;

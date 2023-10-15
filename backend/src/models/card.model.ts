@@ -1,10 +1,11 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 import { Card } from "../types";
 
 const cardSchema = new mongoose.Schema(
 	{
-		username: {
-			type: String,
+		userId: {
+			type: Schema.Types.ObjectId,
+			ref: "User",
 			required: true,
 		},
 		question: {
@@ -16,7 +17,8 @@ const cardSchema = new mongoose.Schema(
 			required: true,
 		},
 		deck: {
-			type: [String],
+			type: [Schema.Types.ObjectId],
+			ref: "Deck",
 			required: true,
 		},
 		spacedAt: {

@@ -1,4 +1,3 @@
-import mongoose from "mongoose";
 import CardModel from "../models/card.model";
 import { Card } from "../types";
 import logger from "../utils/logger";
@@ -7,60 +6,34 @@ const createCard = async (cardInput: Card) => {
 	try {
 		cardInput.spacedAt = new Date();
 		cardInput.spacedRep = 1;
-		if (cardInput.deck == null) {
-			cardInput.deck = ["undefined"];
-		}
 		return await CardModel.create(cardInput);
 	} catch (e: any) {
 		logger.error(e.message);
+		throw new Error(e);
 	}
 };
 
-const getCardsByDeck = async (username: string, deck: string) => {
+const getCardsByUser = async (userId: string) => {
 	try {
-		var cards: Array<Card>;
-		if (deck === "all") {
-			cards = await CardModel.find({ username: username });
-		} else {
-			cards = await CardModel.find({
-				username: username,
-				deck: deck,
-			});
-		}
-		return cards;
+		const cards: Array<Card> = await CardModel.find({
+			userId: userId,
+		}).populate({ path: "deck" });
+		return assignCards(cards);
 	} catch (e: any) {
 		logger.error(e.message);
+		throw new Error(e);
 	}
 };
 
-const getCardsByDeckAndSpacedRep = async (username: string, deck: string) => {
+const getCardsByDeck = async (deckId: string) => {
 	try {
-		var cards: Array<Card>;
-		if (deck === "all") {
-			cards = await CardModel.find({ username: username });
-		} else {
-			cards = await CardModel.find({
-				username: username,
-				deck: deck,
-			});
-		}
-		var cardsReturn: Array<Card> = [];
-
-		if (cards) {
-			cards.forEach((card) => {
-				var currentDate = new Date();
-				const spacedRep = card.spacedRep;
-				const spacedDate = new Date(
-					card.spacedAt.getTime() + spacedRep * 24 * 60 * 60 * 1000
-				);
-				if (spacedDate <= currentDate) {
-					cardsReturn.push(card);
-				}
-			});
-		}
-		return cardsReturn;
+		const cards: Array<Card> = await CardModel.find({
+			deck: deckId,
+		}).populate({ path: "deck" });
+		return assignCards(cards);
 	} catch (e: any) {
 		logger.error(e.message);
+		throw new Error(e);
 	}
 };
 
@@ -69,6 +42,7 @@ const updateCard = async (id: string, cardInput: Card) => {
 		await CardModel.findOneAndUpdate({ _id: id }, cardInput);
 	} catch (e: any) {
 		logger.error(e.message);
+		throw new Error(e);
 	}
 };
 
@@ -77,13 +51,34 @@ const deleteCard = async (id: string, cardInput: Card) => {
 		await CardModel.findOneAndRemove({ _id: id });
 	} catch (e: any) {
 		logger.error(e.message);
+		throw new Error(e);
 	}
 };
 
-export {
-	createCard,
-	getCardsByDeck,
-	getCardsByDeckAndSpacedRep,
-	updateCard,
-	deleteCard,
+const assignCards = (cards: Array<Card>) => {
+	var cardsSpaced: Array<Card> = [];
+	var cardsNotSpaced: Array<Card> = [];
+	if (cards) {
+		cards.forEach((card) => {
+			var currentDate = new Date();
+			const spacedRep = card.spacedRep;
+			const spacedDate = new Date(
+				card.spacedAt.getTime() + spacedRep * 24 * 60 * 60 * 1000
+			);
+			if (spacedDate <= currentDate) {
+				cardsSpaced.push(card);
+			} else {
+				cardsNotSpaced.push(card);
+			}
+		});
+	}
+	const cardObj = {
+		spaced: cardsSpaced,
+		notSpaced: cardsNotSpaced,
+	};
+	return cardObj;
 };
+
+// TODO Delete Cards By User
+
+export { createCard, getCardsByDeck, getCardsByUser, updateCard, deleteCard };

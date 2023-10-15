@@ -2,8 +2,8 @@ import { Request, Response } from "express";
 import {
 	createCard,
 	deleteCard,
+	getCardsByUser,
 	getCardsByDeck,
-	getCardsByDeckAndSpacedRep,
 	updateCard,
 } from "../services/card.service";
 import logger from "../utils/logger";
@@ -18,31 +18,32 @@ async function createCardHandler(req: Request, res: Response) {
 	}
 }
 
-async function getCardsHandler(req: Request, res: Response) {
+// TODO getCardsByUserHandler Limit By Range
+async function getCardsByUserHandler(req: Request, res: Response) {
 	try {
-		if (req.body.spaced) {
-			var deck = req.body.deck || "all";
-			const cards = await getCardsByDeckAndSpacedRep(
-				req.body.username,
-				deck
-			);
-			return res.status(200).send(cards);
-		} else {
-			var deck = req.body.deck || "all";
-			const cards = await getCardsByDeck(req.body.username, deck);
-			return res.status(200).send(cards);
-		}
+		const cards = await getCardsByUser(req.body.userId);
+		return res.status(200).send(cards);
 	} catch (e: any) {
 		logger.error(e.message);
 		res.status(409).send(e.message);
 	}
 }
-
+// TODO getCardsByDeckHandler Limit By Range
+async function getCardsByDeckHandler(req: Request, res: Response) {
+	try {
+		const cards = await getCardsByDeck(req.body.deck);
+		return res.status(200).send(cards);
+	} catch (e: any) {
+		logger.error(e.message);
+		res.status(409).send(e.message);
+	}
+}
+// TODO updateCardHandler update progress & spaced scenario
 async function updateCardHandler(req: Request, res: Response) {
 	try {
-		await updateCard(req.params.id, req.body);
+		await updateCard(req.query.id as string, req.body);
 		res.status(200).send({
-			id: req.params.id,
+			id: req.query.id,
 			message: "Card Updated Successfully",
 		});
 	} catch (e: any) {
@@ -53,9 +54,9 @@ async function updateCardHandler(req: Request, res: Response) {
 
 async function deleteCardHandler(req: Request, res: Response) {
 	try {
-		await deleteCard(req.params.id, req.body);
+		await deleteCard(req.query.id as string, req.body);
 		res.status(200).send({
-			id: req.params.id,
+			id: req.query.id,
 			message: "Card Deleted Successfully",
 		});
 	} catch (e: any) {
@@ -66,7 +67,8 @@ async function deleteCardHandler(req: Request, res: Response) {
 
 export {
 	createCardHandler,
-	getCardsHandler,
+	getCardsByUserHandler,
+	getCardsByDeckHandler,
 	updateCardHandler,
 	deleteCardHandler,
 };
