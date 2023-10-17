@@ -50,7 +50,15 @@ export default function Footer() {
 					© 2023 StudyStack. All Rights Reserved
 				</Typography>
 				<Container
-					sx={{ ml: window.innerWidth > 850 ? "37%" : "27%", mt: 1 }}
+					sx={{
+						ml:
+							window.innerWidth > 850
+								? window.innerWidth > 1200
+									? "37.5%"
+									: "32%"
+								: "27%",
+						mt: 1,
+					}}
 				>
 					<IconButton
 						disableRipple
@@ -98,7 +106,7 @@ export default function Footer() {
 					flexGrow: 1,
 					mt: 1,
 					mb: 1,
-					ml: 3,
+					ml: 6,
 					display: { sm: "none" },
 					justifyContent: "center",
 				}}
