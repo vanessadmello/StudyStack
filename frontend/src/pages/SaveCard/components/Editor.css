@@ -1,0 +1,54 @@
+.quill {
+	width: calc(100% - 10%);
+	padding-left: 2.5em;
+}
+
+@media screen and (max-width: 480px) {
+	.quill {
+		width: calc(100% - 12%);
+		padding-left: 1.5em;
+	}
+}
+.ql-editor {
+	height: 300px;
+	max-height: 290px;
+	overflow: auto;
+}
+.MuiOutlinedInput-notchedOutline {
+	border: 2px solid #ec407a !important;
+	border-radius: 1px !important;
+}
+.ql-container {
+	font-family: "Roboto Mono", monospace !important;
+	font-size: 19px !important;
+	border-left: 2px solid #ec407a !important;
+	border-right: 2px solid #ec407a !important;
+	border-bottom: 2px solid #ec407a !important;
+}
+
+.ql-toolbar.ql-snow {
+	border: 2px solid #ec407a !important;
+	box-sizing: border-box;
+	font-family: "Roboto Mono", monospace !important;
+	padding: 8px;
+}
+
+.ql-snow.ql-toolbar button:hover,
+.ql-snow.ql-toolbar button:hover .ql-fill,
+.ql-snow.ql-toolbar button.ql-active .ql-fill,
+.ql-snow.ql-toolbar .ql-picker-label:hover,
+.ql-snow.ql-toolbar .ql-picker-item.ql-selected,
+.ql-snow.ql-toolbar .ql-picker-item:hover,
+.ql-snow.ql-toolbar .ql-picker-label.ql-active {
+	fill: #ec407a !important;
+	color: #ec407a !important;
+}
+
+.ql-snow.ql-toolbar button:hover .ql-stroke,
+.ql-snow.ql-toolbar button.ql-active .ql-stroke,
+.ql-snow.ql-toolbar .ql-picker-label:hover .ql-stroke,
+.ql-snow.ql-toolbar .ql-picker-item.ql-selected .ql-stroke,
+.ql-snow.ql-toolbar .ql-picker-item:hover .ql-stroke,
+.ql-snow.ql-toolbar .ql-picker-label.ql-active .ql-stroke {
+	stroke: #ec407a !important;
+}
