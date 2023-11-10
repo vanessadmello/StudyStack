@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import "./Editor.css"
+import "./Editor.css";
 import "highlight.js/styles/stackoverflow-dark.css";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
 export default function Editor() {
-    const [code, setCode] = useState("");
+	const [code, setCode] = useState("");
 
 	const handleProcedureContentChange = (content, delta, source, editor) => {
 		const contentJson = editor.getContents();
@@ -46,16 +46,16 @@ export default function Editor() {
 		"size",
 		"color",
 	];
-  return (
+	return (
 		<ReactQuill
 			className="material-textfield"
 			value={code}
 			placeholder="Enter Your Answer"
-			style={{ height: "300px" }}
+			style={{ height: "240px" }}
 			onChange={handleProcedureContentChange}
 			theme="snow"
 			modules={modules}
 			formats={formats}
 		></ReactQuill>
-  );
+	);
 }

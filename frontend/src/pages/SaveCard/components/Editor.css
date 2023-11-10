@@ -10,8 +10,6 @@
 	}
 }
 .ql-editor {
-	height: 300px;
-	max-height: 290px;
 	overflow: auto;
 }
 .MuiOutlinedInput-notchedOutline {
