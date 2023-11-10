@@ -1,7 +1,7 @@
 import React from "react";
 import Grid from "@mui/material/Grid";
-import { LineChart } from "./LineChart";
-import { DonutChart } from "./DonutChart";
+import LineChart from "./LineChart";
+import DonutChart from "./DonutChart";
 import AddCard from "./AddCard";
 
 export default function ShowChart() {

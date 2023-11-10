@@ -1,8 +1,9 @@
-import "./App.css";
-import Home from "./pages/Home/Home";
-import { Routes, Route } from "react-router-dom";
-import { pink } from "@mui/material/colors";
+import { Route, Routes } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import pink from "@mui/material/colors/pink";
+import Home from "./pages/Home/Home";
+import Deck from "./pages/Deck/Deck";
+import SaveCard from "./pages/SaveCard/SaveCard";
 
 const THEME = createTheme({
 	typography: {
@@ -22,7 +23,9 @@ function App() {
 	return (
 		<ThemeProvider theme={THEME}>
 			<Routes>
-				<Route path="/" element={<Home />} />
+				<Route path="/home" element={<Home />} />
+				<Route path="/decks" element={<Deck />} />
+				<Route path="/addCard" element={<SaveCard />} />
 			</Routes>
 		</ThemeProvider>
 	);

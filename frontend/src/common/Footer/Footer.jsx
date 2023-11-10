@@ -1,13 +1,11 @@
 import React from "react";
-import {
-	Container,
-	Paper,
-	Box,
-	Typography,
-	Grid,
-	IconButton,
-} from "@mui/material";
-import { pink } from "@mui/material/colors";
+import Container from "@mui/material/Container"
+import Paper from "@mui/material/Paper";
+import Box from "@mui/material/Box"
+import Typography from "@mui/material/Typography";
+import Grid from "@mui/material/Grid";
+import IconButton from "@mui/material/IconButton";
+import pink from "@mui/material/colors/pink";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import MailIcon from "@mui/icons-material/Mail";
 import InstagramIcon from "@mui/icons-material/Instagram";

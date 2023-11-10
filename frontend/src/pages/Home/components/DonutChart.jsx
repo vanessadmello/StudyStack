@@ -1,10 +1,12 @@
 import React from "react";
+import Paper from "@mui/material/Paper";
+import Card from "@mui/material/Card";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
-import { Paper, Card } from "@mui/material";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
-export const options = {
+
+const options = {
 	responsive: true,
 	plugins: {
 		legend: {
@@ -28,7 +30,7 @@ export const options = {
 	maintainAspectRatio: false,
 };
 
-export const data = {
+const data = {
 	labels: ["Data Structures", "Algorithm", "Graph", "Undefined", "Stack"],
 	datasets: [
 		{
@@ -56,7 +58,7 @@ export const data = {
 	],
 };
 
-export function DonutChart() {
+export default function DonutChart() {
 	var height = window.innerWidth < 1200 ? "225" : "240";
 	var style =
 		window.innerWidth > 800

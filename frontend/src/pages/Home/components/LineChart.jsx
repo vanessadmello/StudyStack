@@ -9,8 +9,9 @@ import {
 	Tooltip,
 	Legend,
 } from "chart.js";
-import { Line } from "react-chartjs-2";
-import { Paper, Card } from "@mui/material";
+import {Line} from "react-chartjs-2";
+import Paper from "@mui/material/Paper";
+import Card from "@mui/material/Card";
 
 ChartJS.register(
 	CategoryScale,
@@ -22,7 +23,7 @@ ChartJS.register(
 	Legend
 );
 
-export const options = {
+const options = {
 	responsive: true,
 	plugins: {
 		legend: {
@@ -46,7 +47,7 @@ export const options = {
 
 const labels = ["January", "February", "March", "April", "May", "June"];
 
-export const data = {
+const data = {
 	labels,
 	datasets: [
 		{
@@ -64,7 +65,7 @@ export const data = {
 	],
 };
 
-export function LineChart() {
+export default function LineChart() {
 	var height = window.innerWidth < 1200 ? "225" : "240";
 	return (
 		<Paper elevation={3} square={false}>

@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -15,8 +15,12 @@ import PostAddIcon from "@mui/icons-material/PostAdd";
 import Settings from "./components/Settings";
 
 const pages = [
-	{ name: "Home", icon: <HomeIcon sx={{ mr: 1, pb: 0 }} /> },
-	{ name: "Deck", icon: <PostAddIcon sx={{ mr: 1, pb: 0 }} /> },
+	{ name: "Home", icon: <HomeIcon sx={{ mr: 1, pb: 0 }} />, path: "/home" },
+	{
+		name: "Deck",
+		icon: <PostAddIcon sx={{ mr: 1, pb: 0 }} />,
+		path: "/decks",
+	},
 ];
 
 function NavBar() {
@@ -94,6 +98,8 @@ function NavBar() {
 							{pages.map((page) => (
 								<MenuItem
 									key={page.name}
+									component="a"
+									href={page.path}
 									onClick={handleCloseNavMenu}
 								>
 									{page.icon}
@@ -149,7 +155,8 @@ function NavBar() {
 						{pages.map((page) => (
 							<Button
 								key={page.name}
-								onClick={handleCloseNavMenu}
+								component="a"
+								href={page.path}
 								sx={{
 									my: 2,
 									mr: 5,

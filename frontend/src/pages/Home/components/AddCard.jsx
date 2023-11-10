@@ -1,7 +1,10 @@
 import React from "react";
 import AddCardIcon from "@mui/icons-material/AddCard";
-import { pink } from "@mui/material/colors";
-import { Paper, Card, Typography, CardContent } from "@mui/material";
+import pink from "@mui/material/colors/pink";
+import Paper from "@mui/material/Paper";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Typography from "@mui/material/Typography";
 import CollectionsBookmarkIcon from "@mui/icons-material/CollectionsBookmark";
 
 export default function AddCard({ isCard }) {
