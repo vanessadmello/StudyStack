@@ -19,9 +19,7 @@
 .ql-container {
 	font-family: "Roboto Mono", monospace !important;
 	font-size: 19px !important;
-	border-left: 2px solid #ec407a !important;
-	border-right: 2px solid #ec407a !important;
-	border-bottom: 2px solid #ec407a !important;
+	border: 2px solid #ec407a !important;
 }
 
 .ql-toolbar.ql-snow {

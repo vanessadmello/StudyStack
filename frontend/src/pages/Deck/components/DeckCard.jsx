@@ -6,7 +6,6 @@ import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import TableInfo from "./TableInfo";
-import { CardActions, CardContent } from "@mui/material";
 import QuizIcon from "@mui/icons-material/Quiz";
 import FactCheckIcon from "@mui/icons-material/FactCheck";
 
@@ -14,7 +13,7 @@ export default function DeckCard() {
 	const cards = [
 		{ name: "Data Structures", toReview: 50, reviewed: 25 },
 		{ name: "Music Theory", toReview: 50, reviewed: 25 },
-		{ name: "Music Theory", toReview: 50, reviewed: 25 },
+		{ name: "Music Practice", toReview: 50, reviewed: 25 },
 	];
 
 	return (
@@ -29,7 +28,14 @@ export default function DeckCard() {
 				}}
 			>
 				{cards.map((card) => (
-					<Grid item md={5.6} xs={10} sm={5.6} lg={3.8}>
+					<Grid
+						item
+						md={5.6}
+						xs={10}
+						sm={5.6}
+						lg={3.8}
+						key={card.name}
+					>
 						<Paper
 							elevation={3}
 							square={false}
@@ -69,7 +75,7 @@ export default function DeckCard() {
 											pb: 3,
 										}}
 									>
-										<Button variant="outlined">
+										<Button variant="outlined" href="/quiz">
 											<QuizIcon sx={{ mr: 1.3 }} />
 											Quiz
 										</Button>

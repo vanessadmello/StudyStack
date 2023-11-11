@@ -1,14 +1,15 @@
 import React, { useState } from "react";
-import "./Editor.css";
 import "highlight.js/styles/stackoverflow-dark.css";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import "./Editor.css";
 
-export default function Editor() {
+export default function Editor({ isReadOnly, dataQuiz }) {
 	const [code, setCode] = useState("");
 
 	const handleProcedureContentChange = (content, delta, source, editor) => {
 		const contentJson = editor.getContents();
+		console.log(editor.getHTML());
 		setCode(contentJson);
 	};
 
@@ -46,9 +47,19 @@ export default function Editor() {
 		"size",
 		"color",
 	];
-	return (
+	return isReadOnly ? (
 		<ReactQuill
-			className="material-textfield"
+			value={dataQuiz.answer}
+			style={{ height: "240px" }}
+			theme="snow"
+			modules={{
+				toolbar: false,
+				syntax: true,
+			}}
+			readOnly={true}
+		></ReactQuill>
+	) : (
+		<ReactQuill
 			value={code}
 			placeholder="Enter Your Answer"
 			style={{ height: "240px" }}

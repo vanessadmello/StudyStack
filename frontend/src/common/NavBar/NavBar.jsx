@@ -37,7 +37,6 @@ function NavBar() {
 	return (
 		<AppBar
 			position="static"
-			col
 			sx={{ padding: "0", marginBottom: "20px" }}
 		>
 			<Container maxWidth="false">

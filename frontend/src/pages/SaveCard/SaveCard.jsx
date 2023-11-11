@@ -7,7 +7,7 @@ import Select from "@mui/material/Select";
 import Button from "@mui/material/Button";
 import NavBar from "../../common/NavBar/NavBar";
 import Footer from "../../common/Footer/Footer";
-import Editor from "./components/Editor";
+import Editor from "../../common/Editor/Editor";
 
 export default function SaveCard() {
 	const [deck, setDeck] = React.useState("");
@@ -30,7 +30,7 @@ export default function SaveCard() {
 				label="Enter the Question"
 				variant="outlined"
 			/>
-			<Editor />
+			<Editor isReadOnly={false} />
 			<FormControl
 				required
 				sx={{
@@ -54,10 +54,7 @@ export default function SaveCard() {
 			</FormControl>
 			<Button
 				sx={{
-					ml:
-						window.innerWidth > 900
-							? 4.7
-							: 0,
+					ml: window.innerWidth > 900 ? 4.7 : 0,
 					mt: window.innerWidth > 450 ? 8 : 11,
 					width: window.innerWidth > 450 ? "20%" : "25%",
 					height: "58px",

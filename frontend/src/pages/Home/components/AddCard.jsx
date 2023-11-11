@@ -1,13 +1,12 @@
 import React from "react";
-import AddCardIcon from "@mui/icons-material/AddCard";
 import pink from "@mui/material/colors/pink";
 import Paper from "@mui/material/Paper";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardActionArea from "@mui/material/CardActionArea";
 import Typography from "@mui/material/Typography";
+import AddCardIcon from "@mui/icons-material/AddCard";
 import CollectionsBookmarkIcon from "@mui/icons-material/CollectionsBookmark";
-import { Link } from "@mui/material";
 
 export default function AddCard({ isCard }) {
 	return (
@@ -16,7 +15,7 @@ export default function AddCard({ isCard }) {
 				sx={{
 					display: "flex",
 					border: "2px solid #ec407a",
-					
+
 					pl:
 						window.innerWidth > 900
 							? window.innerWidth > 1100
