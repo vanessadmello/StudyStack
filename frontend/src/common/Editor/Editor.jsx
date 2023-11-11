@@ -50,7 +50,7 @@ export default function Editor({ isReadOnly, dataQuiz }) {
 	return isReadOnly ? (
 		<ReactQuill
 			value={dataQuiz.answer}
-			style={{ height: "240px" }}
+			style={{ height: "260px"}}
 			theme="snow"
 			modules={{
 				toolbar: false,
@@ -62,7 +62,7 @@ export default function Editor({ isReadOnly, dataQuiz }) {
 		<ReactQuill
 			value={code}
 			placeholder="Enter Your Answer"
-			style={{ height: "240px" }}
+			style={{ height: "260px" }}
 			onChange={handleProcedureContentChange}
 			theme="snow"
 			modules={modules}

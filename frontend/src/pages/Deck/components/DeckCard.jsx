@@ -1,6 +1,6 @@
 import React from "react";
+import pink from "@mui/material/colors/pink";
 import Paper from "@mui/material/Paper";
-import Card from "@mui/material/Card";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
@@ -39,53 +39,44 @@ export default function DeckCard() {
 						<Paper
 							elevation={3}
 							square={false}
-							sx={{ mb: 3, border: "2px solid #ec407a" }}
+							sx={{ mb: 3, border: `2.5px solid ${pink[400]}` }}
 						>
-							<Card
-								sx={{
-									display: "flex",
-								}}
-							>
-								<div>
-									<Typography
-										sx={{
-											ml:
-												window.innerWidth > 850
-													? window.innerWidth > 1100
-														? 6
-														: 10
-													: 4,
-											pt: 3,
-											fontSize: 20,
-											textAlign: "center",
-										}}
-									>
-										{card.name}
-									</Typography>
-									<TableInfo props={card} />
+							<div>
+								<Typography
+									sx={{
+										ml:
+											window.innerWidth > 850
+												? window.innerWidth > 1100
+													? 6
+													: 10
+												: 4,
+										pt: 3,
+										fontSize: 20,
+										textAlign: "center",
+									}}
+								>
+									{card.name}
+								</Typography>
+								<TableInfo props={card} />
 
-									<Stack
-										spacing={3}
-										direction="row"
-										sx={{
-											ml:
-												window.innerWidth > 850
-													? 12
-													: 5.2,
-											pb: 3,
-										}}
-									>
-										<Button variant="outlined" href="/quiz">
-											<QuizIcon sx={{ mr: 1.3 }} />
-											Quiz
-										</Button>
-										<Button variant="contained">
-											<FactCheckIcon sx={{ mr: 1.3 }} />
-											Review
-										</Button>
-									</Stack>
-								</div>
-							</Card>
+								<Stack
+									spacing={3}
+									direction="row"
+									sx={{
+										ml: window.innerWidth > 850 ? 12 : 5.2,
+										pb: 3,
+									}}
+								>
+									<Button variant="outlined" href="/quiz">
+										<QuizIcon sx={{ mr: 1.3 }} />
+										Quiz
+									</Button>
+									<Button variant="contained">
+										<FactCheckIcon sx={{ mr: 1.3 }} />
+										Review
+									</Button>
+								</Stack>
+							</div>
 						</Paper>
 					</Grid>
 				))}
