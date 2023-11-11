@@ -1,5 +1,4 @@
 import React from "react";
-import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
@@ -8,13 +7,40 @@ import MenuItem from "@mui/material/MenuItem";
 import SettingsIcon from "@mui/icons-material/Settings";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import LogoutIcon from "@mui/icons-material/Logout";
+import MenuIcon from "@mui/icons-material/Menu";
+import HomeIcon from "@mui/icons-material/Home";
+import PostAddIcon from "@mui/icons-material/PostAdd";
 
-export default function Settings() {
+export default function MenuBar({ isSetting }) {
 	const settings = [
-		{ name: "Account", icon: <AccountCircleIcon sx={{ mr: 1, pb: 0 }} /> },
-		{ name: "Logout", icon: <LogoutIcon sx={{ mr: 1, pb: 0 }} /> },
+		{
+			name: "Account",
+			icon: <AccountCircleIcon sx={{ mr: 1, pb: 0 }} />,
+			path: "/home",
+		},
+		{
+			name: "Logout",
+			icon: <LogoutIcon sx={{ mr: 1, pb: 0 }} />,
+			path: "/home",
+		},
 	];
 
+	const pages = [
+		{
+			name: "Home",
+			icon: <HomeIcon sx={{ mr: 1, pb: 0 }} />,
+			path: "/home",
+		},
+		{
+			name: "Deck",
+			icon: <PostAddIcon sx={{ mr: 1, pb: 0 }} />,
+			path: "/decks",
+		},
+	];
+
+	const menuItems = isSetting
+		? { icon: <SettingsIcon />, menu: settings, text: "Settings" }
+		: { icon: <MenuIcon />, menu: pages, text: "Pages" };
 	const [anchorElUser, setAnchorElUser] = React.useState(null);
 
 	const handleOpenUserMenu = (event) => {
@@ -23,14 +49,15 @@ export default function Settings() {
 	const handleCloseUserMenu = () => {
 		setAnchorElUser(null);
 	};
+
 	return (
-		<Box sx={{ flexGrow: 0, pr: "10px" }}>
-			<Tooltip title="Open settings">
+		<div>
+			<Tooltip title={`Open ${menuItems.text}`}>
 				<IconButton
 					onClick={handleOpenUserMenu}
-					sx={{ p: 0, color: "inherit" }}
+					sx={{ color: "inherit" }}
 				>
-					<SettingsIcon />
+					{menuItems.icon}
 				</IconButton>
 			</Tooltip>
 			<Menu
@@ -49,21 +76,21 @@ export default function Settings() {
 				open={Boolean(anchorElUser)}
 				onClose={handleCloseUserMenu}
 			>
-				{settings.map((setting) => (
-					<MenuItem key={setting.name} onClick={handleCloseUserMenu}>
-						<Typography
-							sx={{
-								mr: 2,
-								display: { xs: "flex", md: "flex" },
-								color: "inherit",
-							}}
-						>
-							{setting.icon}
-							{setting.name}
+				{menuItems.menu.map((menu) => (
+					<MenuItem
+						key={menu.name}
+						component="a"
+						href={menu.path}
+						onClick={handleCloseUserMenu}
+						
+					>
+						<Typography sx={{ display: "flex" }}>
+							{menu.icon}
+							{menu.name}
 						</Typography>
 					</MenuItem>
 				))}
 			</Menu>
-		</Box>
+		</div>
 	);
 }
