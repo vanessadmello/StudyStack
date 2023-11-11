@@ -1,4 +1,7 @@
 import React from "react";
+import pink from "@mui/material/colors/pink";
+import Paper from "@mui/material/Paper";
+import Card from "@mui/material/Card";
 import {
 	Chart as ChartJS,
 	CategoryScale,
@@ -9,9 +12,7 @@ import {
 	Tooltip,
 	Legend,
 } from "chart.js";
-import {Line} from "react-chartjs-2";
-import Paper from "@mui/material/Paper";
-import Card from "@mui/material/Card";
+import { Line } from "react-chartjs-2";
 
 ChartJS.register(
 	CategoryScale,
@@ -38,7 +39,7 @@ const options = {
 			display: true,
 			text: "Your Analysis Last Week",
 			font: {
-				size: window.innerWidth > 450 ? 17 : 15,
+				size: window.innerWidth > 450 ? 18 : 15,
 			},
 		},
 	},
@@ -66,11 +67,15 @@ const data = {
 };
 
 export default function LineChart() {
-	var height = window.innerWidth < 1200 ? "225" : "240";
 	return (
 		<Paper elevation={3} square={false}>
-			<Card sx={{ display: "flex", border: "2px solid #ec407a", p: 2 }}>
-				<Line options={options} data={data} height={height} />
+			<Card
+				sx={{
+					border: `2.5px solid ${pink[400]}`,
+					p: 2,
+				}}
+			>
+				<Line options={options} data={data} height={240} />
 			</Card>
 		</Paper>
 	);

@@ -9,62 +9,35 @@ import AddCardIcon from "@mui/icons-material/AddCard";
 import CollectionsBookmarkIcon from "@mui/icons-material/CollectionsBookmark";
 
 export default function AddCard({ isCard }) {
+	const styles = {
+		fontSize: 40,
+		color: pink[400],
+	};
+	
+	const data = isCard
+		? { text: "Add Card", icon: <AddCardIcon sx={styles} /> }
+		: {
+				text: "Add Deck",
+				icon: <CollectionsBookmarkIcon sx={styles} />,
+		  };
+
 	return (
 		<Paper elevation={3} square={false}>
 			<Card
 				sx={{
-					display: "flex",
-					border: "2px solid #ec407a",
-
-					pl:
-						window.innerWidth > 900
-							? window.innerWidth > 1100
-								? 30
-								: 23
-							: window.innerWidth > 700
-							? 10
-							: 2,
-					pr:
-						window.innerWidth > 900
-							? window.innerWidth > 1100
-								? 30
-								: 23
-							: window.innerWidth > 700
-							? 10
-							: 2,
+					border: `2.5px solid ${pink[400]}`,
+					flexGrow: 1,
+					textAlign: "center",
 				}}
 			>
-				{isCard ? (
-					<CardActionArea component="a" href="/addCard">
-						<CardContent>
-							<AddCardIcon
-								sx={{
-									fontSize: 40,
-									color: pink[400],
-									pl: 2,
-								}}
-							/>
-							<Typography sx={{ fontSize: 15 }}>
-								Add Card
-							</Typography>
-						</CardContent>
-					</CardActionArea>
-				) : (
-					<CardActionArea component="a" href="/addDeck">
-						<CardContent>
-							<CollectionsBookmarkIcon
-								sx={{
-									fontSize: 40,
-									color: pink[400],
-									pl: 2,
-								}}
-							/>
-							<Typography sx={{ fontSize: 15 }}>
-								Add Deck
-							</Typography>
-						</CardContent>
-					</CardActionArea>
-				)}
+				<CardActionArea component="a" href="/addCard">
+					<CardContent>
+						{data.icon}
+						<Typography sx={{ fontSize: 16 }}>
+							{data.text}
+						</Typography>
+					</CardContent>
+				</CardActionArea>
 			</Card>
 		</Paper>
 	);

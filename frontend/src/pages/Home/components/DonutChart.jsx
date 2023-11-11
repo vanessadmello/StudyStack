@@ -1,4 +1,5 @@
 import React from "react";
+import pink from "@mui/material/colors/pink";
 import Paper from "@mui/material/Paper";
 import Card from "@mui/material/Card";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
@@ -21,12 +22,12 @@ const options = {
 			display: true,
 			text: "Decks Analysis",
 			font: {
-				size: window.innerWidth > 450 ? 17 : 15,
+				size: window.innerWidth > 450 ? 18 : 15,
 			},
 		},
 	},
-	cutout: window.innerWidth > 450 ? "60%" : "70%",
-	radius: window.innerWidth > 450 ? (window.innerWidth > 800 ? 90 : 80) : 60,
+	cutout: "70%",
+	radius: window.innerWidth > 450 ? 85 : 60,
 	maintainAspectRatio: false,
 };
 
@@ -53,30 +54,28 @@ const data = {
 				"rgba(153, 102, 255, 1)",
 				"rgba(255, 159, 64, 1)",
 			],
-			borderWidth: window.innerWidth > 450 ? 3 : 2,
+			borderWidth: 2,
 		},
 	],
 };
 
 export default function DonutChart() {
-	var height = window.innerWidth < 1200 ? "225" : "240";
 	var style =
-		window.innerWidth > 800
+		window.innerWidth > 700
 			? {
-					display: "flex",
-					border: "2px solid #ec407a",
-					p: 2,
-					pl: 6,
-					pt: 2,
+					border: `2.5px solid ${pink[400]}`,
+					py: 2,
+					pl: 5,
 			  }
-			: { display: "flex", border: "2px solid #ec407a" };
+			: { border: `2.5px solid ${pink[400]}` };
+
 	return (
 		<Paper elevation={3} square={false}>
 			<Card sx={style}>
 				<Doughnut
 					data={data}
 					options={options}
-					height={height}
+					height={240}
 					sx={style}
 				/>
 			</Card>
