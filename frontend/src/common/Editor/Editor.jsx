@@ -47,6 +47,7 @@ export default function Editor({ isReadOnly, dataQuiz }) {
 		"size",
 		"color",
 	];
+	
 	return isReadOnly ? (
 		<ReactQuill
 			value={dataQuiz.answer}
@@ -57,7 +58,7 @@ export default function Editor({ isReadOnly, dataQuiz }) {
 				syntax: true,
 			}}
 			readOnly={true}
-		></ReactQuill>
+		/>
 	) : (
 		<ReactQuill
 			value={code}
@@ -67,6 +68,6 @@ export default function Editor({ isReadOnly, dataQuiz }) {
 			theme="snow"
 			modules={modules}
 			formats={formats}
-		></ReactQuill>
+		/>
 	);
 }
