@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
@@ -9,14 +10,24 @@ import Editor from "../../common/Editor/Editor";
 import Footer from "../../common/Footer/Footer";
 import IconTextContainer from "./components/IconTextContainer";
 
-export default function Quiz() {
+export default function Quiz(props) {
+	const navigate = useNavigate();
+	const location = useLocation();
+
+	useEffect(() => {
+		if (location.state === null) {
+			navigate("/decks");
+		}
+	}, []);
+
+	const title = location.state;
+	console.log(title);
 	const [index, setIndex] = useState(0);
 	const [isReview, setIsReview] = useState(true);
 	const [isFinished, setIsFinished] = useState(false);
 	const flipCardClick = () => {
 		setIsReview(false);
 	};
-
 	const nextQuestion = () => {
 		if (index + 1 === data.length) {
 			setIsFinished(true);

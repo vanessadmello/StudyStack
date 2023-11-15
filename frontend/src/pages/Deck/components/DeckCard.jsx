@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import pink from "@mui/material/colors/pink";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
@@ -15,7 +16,7 @@ export default function DeckCard() {
 		{ name: "Music Theory", toReview: 50, reviewed: 25 },
 		{ name: "Music Practice", toReview: 50, reviewed: 25 },
 	];
-
+	const dataToPass = { name: "John Doe", age: 25 };
 	return (
 		<div>
 			<Grid
@@ -67,14 +68,24 @@ export default function DeckCard() {
 										pb: 3,
 									}}
 								>
-									<Button variant="outlined" href="/quiz">
-										<QuizIcon sx={{ mr: 1.3 }} />
-										Quiz
-									</Button>
-									<Button variant="contained">
-										<FactCheckIcon sx={{ mr: 1.3 }} />
-										Review
-									</Button>
+									<Link
+										to={"/quiz"}
+										state={{ title: `${card.name}` }}
+									>
+										<Button variant="outlined">
+											<QuizIcon sx={{ mr: 1.3 }} />
+											Quiz
+										</Button>
+									</Link>
+									<Link
+										to={"/review"}
+										state={{ title: `${card.name}` }}
+									>
+										<Button variant="contained">
+											<FactCheckIcon sx={{ mr: 1.3 }} />
+											Review
+										</Button>
+									</Link>
 								</Stack>
 							</div>
 						</Paper>

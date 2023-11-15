@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -53,28 +54,31 @@ function NavBar() {
 						}}
 					>
 						{pages.map((page) => (
-							<Button
+							<Link
+								to={page.path}
 								key={page.name}
-								component="a"
-								href={page.path}
-								sx={{
-									my: 2,
-									mr: 4,
-									color: "inherit",
-									display: "block",
-								}}
+								style={{ textDecoration: "none" }}
 							>
-								<Typography
+								<Button
 									sx={{
-										mr: 1,
-										display: { xs: "none", md: "flex" },
-										color: "inherit",
+										my: 2,
+										mr: 4,
+										color: "white",
+										display: "block",
 									}}
 								>
-									{page.icon}
-									{page.name}
-								</Typography>
-							</Button>
+									<Typography
+										sx={{
+											mr: 1,
+											display: { xs: "none", md: "flex" },
+											color: "inherit",
+										}}
+									>
+										{page.icon}
+										{page.name}
+									</Typography>
+								</Button>
+							</Link>
 						))}
 					</Box>
 					<MenuBar isSetting={true} />

@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
@@ -77,18 +78,20 @@ export default function MenuBar({ isSetting }) {
 				onClose={handleCloseUserMenu}
 			>
 				{menuItems.menu.map((menu) => (
-					<MenuItem
+					<Link
+						to={menu.path}
 						key={menu.name}
-						component="a"
-						href={menu.path}
-						onClick={handleCloseUserMenu}
-						
+						style={{ textDecoration: "none" }}
 					>
-						<Typography sx={{ display: "flex" }}>
-							{menu.icon}
-							{menu.name}
-						</Typography>
-					</MenuItem>
+						<MenuItem onClick={handleCloseUserMenu}>
+							<Typography
+								sx={{ display: "flex", color: "black" }}
+							>
+								{menu.icon}
+								{menu.name}
+							</Typography>
+						</MenuItem>
+					</Link>
 				))}
 			</Menu>
 		</div>

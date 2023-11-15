@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import pink from "@mui/material/colors/pink";
 import Paper from "@mui/material/Paper";
 import Card from "@mui/material/Card";
@@ -13,7 +14,7 @@ export default function AddCard({ isCard }) {
 		fontSize: 40,
 		color: pink[400],
 	};
-	
+
 	const data = isCard
 		? { text: "Add Card", icon: <AddCardIcon sx={styles} /> }
 		: {
@@ -30,14 +31,16 @@ export default function AddCard({ isCard }) {
 					textAlign: "center",
 				}}
 			>
-				<CardActionArea component="a" href="/addCard">
-					<CardContent>
-						{data.icon}
-						<Typography sx={{ fontSize: 16 }}>
-							{data.text}
-						</Typography>
-					</CardContent>
-				</CardActionArea>
+				<Link to={"/addCard"} style={{ textDecoration: "none" }}>
+					<CardActionArea>
+						<CardContent>
+							{data.icon}
+							<Typography sx={{ fontSize: 16, color: "black" }}>
+								{data.text}
+							</Typography>
+						</CardContent>
+					</CardActionArea>
+				</Link>
 			</Card>
 		</Paper>
 	);
