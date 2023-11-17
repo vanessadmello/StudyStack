@@ -16,7 +16,6 @@ export default function DeckCard() {
 		{ name: "Music Theory", toReview: 50, reviewed: 25 },
 		{ name: "Music Practice", toReview: 50, reviewed: 25 },
 	];
-	const dataToPass = { name: "John Doe", age: 25 };
 	return (
 		<div>
 			<Grid

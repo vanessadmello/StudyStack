@@ -18,10 +18,8 @@ export default function Quiz(props) {
 		if (location.state === null) {
 			navigate("/decks");
 		}
-	}, []);
+	}, [location.state, navigate]);
 
-	const title = location.state;
-	console.log(title);
 	const [index, setIndex] = useState(0);
 	const [isReview, setIsReview] = useState(true);
 	const [isFinished, setIsFinished] = useState(false);
@@ -32,7 +30,6 @@ export default function Quiz(props) {
 		if (index + 1 === data.length) {
 			setIsFinished(true);
 		} else {
-			console.log(data.length, index);
 			setIndex(index + 1);
 			setIsReview(true);
 		}
@@ -109,7 +106,7 @@ export default function Quiz(props) {
 						sx={{
 							mt: 3,
 							width: window.innerWidth > 450 ? "20%" : "50%",
-							height: "58px",
+							height: "48px",
 						}}
 						variant="contained"
 						onClick={flipCardClick}
@@ -138,12 +135,12 @@ export default function Quiz(props) {
 						id="outlined-disabled"
 						value={data[index].question}
 					/>
-					<Editor isReadOnly={true} dataQuiz={data[index]} />
+					<Editor isReadOnly={true} answer={data[index].answer} />
 					<Button
 						sx={{
 							mt: 3,
 							width: window.innerWidth > 450 ? "20%" : "30%",
-							height: "58px",
+							height: "48px",
 						}}
 						style={{ border: "2px solid" }}
 						variant="outlined"
@@ -156,7 +153,7 @@ export default function Quiz(props) {
 							ml: window.innerWidth > 450 ? 4.7 : 3,
 							mt: 3,
 							width: window.innerWidth > 450 ? "20%" : "30%",
-							height: "58px",
+							height: "48px",
 						}}
 						variant="contained"
 						onClick={nextQuestion}

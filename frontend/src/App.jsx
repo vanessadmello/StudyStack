@@ -5,6 +5,7 @@ import Home from "./pages/Home/Home";
 import Deck from "./pages/Deck/Deck";
 import SaveCard from "./pages/SaveCard/SaveCard";
 import Quiz from "./pages/Quiz/Quiz";
+import ReviewCards from "./pages/ReviewCards/ReviewCards";
 
 const THEME = createTheme({
 	typography: {
@@ -26,8 +27,10 @@ function App() {
 			<Routes>
 				<Route path="/home" element={<Home />} />
 				<Route path="/decks" element={<Deck />} />
-				<Route path="/addCard" element={<SaveCard />} />
+				<Route path="/addCard" element={<SaveCard isEdit={false} />} />
 				<Route path="/quiz" element={<Quiz />} />
+				<Route path="/review" element={<ReviewCards />} />
+				<Route path="/viewCard" element={<SaveCard isEdit={true} />} />
 			</Routes>
 		</ThemeProvider>
 	);

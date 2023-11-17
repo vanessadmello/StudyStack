@@ -4,12 +4,11 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import "./Editor.css";
 
-export default function Editor({ isReadOnly, dataQuiz }) {
-	const [code, setCode] = useState("");
+export default function Editor({ isReadOnly, answer }) {
+	const [code, setCode] = useState(answer);
 
 	const handleProcedureContentChange = (content, delta, source, editor) => {
 		const contentJson = editor.getContents();
-		console.log(editor.getHTML());
 		setCode(contentJson);
 	};
 
@@ -47,11 +46,11 @@ export default function Editor({ isReadOnly, dataQuiz }) {
 		"size",
 		"color",
 	];
-	
+
 	return isReadOnly ? (
 		<ReactQuill
-			value={dataQuiz.answer}
-			style={{ height: "260px"}}
+			value={code}
+			style={{ height: "260px" }}
 			theme="snow"
 			modules={{
 				toolbar: false,
