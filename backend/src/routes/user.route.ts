@@ -2,7 +2,7 @@ import { Express } from "express";
 import {
 	createUserHandler,
 	deleteUserHandler,
-	getUserHandler,
+	loginUserHandler,
 	updateUserPasswordHandler,
 } from "../controllers/user.controller";
 import {
@@ -13,7 +13,7 @@ import {
 
 function userRoutes(app: Express) {
 	app.post("/api/user", userValidator, createUserHandler);
-	app.get("/api/user", userValidator, getUserHandler);
+	app.post("/api/login/user", userValidator, loginUserHandler);
 	app.put("/api/user?:id", updateUserValidator, updateUserPasswordHandler);
 	app.delete("/api/user?:id", deleteUserValidator, deleteUserHandler);
 }

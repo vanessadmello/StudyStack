@@ -13,7 +13,7 @@ const cardSchema = new mongoose.Schema(
 			required: true,
 		},
 		answer: {
-			type: String,
+			type: Object,
 			required: true,
 		},
 		deck: {

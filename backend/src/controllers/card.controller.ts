@@ -21,7 +21,7 @@ async function createCardHandler(req: Request, res: Response) {
 // TODO getCardsByUserHandler Limit By Range
 async function getCardsByUserHandler(req: Request, res: Response) {
 	try {
-		const cards = await getCardsByUser(req.body.userId);
+		const cards = await getCardsByUser(req.query.id as string);
 		return res.status(200).send(cards);
 	} catch (e: any) {
 		logger.error(e.message);
@@ -31,7 +31,7 @@ async function getCardsByUserHandler(req: Request, res: Response) {
 // TODO getCardsByDeckHandler Limit By Range
 async function getCardsByDeckHandler(req: Request, res: Response) {
 	try {
-		const cards = await getCardsByDeck(req.body.deck);
+		const cards = await getCardsByDeck(req.query.id as string);
 		return res.status(200).send(cards);
 	} catch (e: any) {
 		logger.error(e.message);

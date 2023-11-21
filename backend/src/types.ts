@@ -2,7 +2,7 @@ export type Card = {
 	_id?: string;
 	userId: string;
 	question: string;
-	answer: string;
+	answer: object;
 	deck: Deck;
 	spacedAt: Date;
 	spacedRep: number;
@@ -29,5 +29,4 @@ export type Deck = {
 	_id?: string;
 	userId: string;
 	name: string;
-	color: string;
 };

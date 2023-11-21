@@ -22,7 +22,7 @@ async function createDeckHandler(req: Request, res: Response) {
 // TODO Get Spaced and Unspaced Totals
 async function getDecksByUserHandler(req: Request, res: Response) {
 	try {
-		const decks = await getDecksByUser(req.body.userId);
+		const decks = await getDecksByUser(req.query.id as string);
 		if (decks) {
 			res.status(200).send(decks);
 		} else {

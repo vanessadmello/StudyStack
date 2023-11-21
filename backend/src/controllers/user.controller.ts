@@ -17,7 +17,6 @@ async function createUserHandler(req: Request, res: Response) {
 			const deck: Deck = {
 				userId: user?._id,
 				name: "default",
-				color: "blue",
 			};
 			await createDeck(deck);
 			return res.status(200).send(user);
@@ -28,7 +27,7 @@ async function createUserHandler(req: Request, res: Response) {
 	}
 }
 
-async function getUserHandler(req: Request, res: Response) {
+async function loginUserHandler(req: Request, res: Response) {
 	try {
 		const user = await validateUser(req.body.username, req.body.password);
 		if (user) {
@@ -70,7 +69,7 @@ async function deleteUserHandler(req: Request, res: Response) {
 
 export {
 	createUserHandler,
-	getUserHandler,
+	loginUserHandler,
 	updateUserPasswordHandler,
 	deleteUserHandler,
 };

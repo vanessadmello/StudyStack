@@ -31,42 +31,12 @@ const cardValidator = [
 	},
 ];
 
-const getCardValidator = [
-	body("deck")
-		.exists()
-		.withMessage("Deck is Required")
-		.isString()
-		.withMessage("Deck should be a String"),
-
-	(req: Request, res: Response, next: NextFunction) => {
-		const errors = validationResult(req);
-		if (!errors.isEmpty())
-			return res.status(422).json({ errors: errors.array() });
-		next();
-	},
-];
-
-const cardsByUserValidator = [
-	body("userId")
-		.exists()
-		.withMessage("Deck is Required")
-		.isString()
-		.withMessage("Deck should be a String"),
-
-	(req: Request, res: Response, next: NextFunction) => {
-		const errors = validationResult(req);
-		if (!errors.isEmpty())
-			return res.status(422).json({ errors: errors.array() });
-		next();
-	},
-];
-
 const idCardValidator = [
 	query("id")
 		.exists()
-		.withMessage("User Id is Required")
+		.withMessage("Id is Required")
 		.isString()
-		.withMessage("User Id should be string"),
+		.withMessage("Id should be string"),
 
 	(req: Request, res: Response, next: NextFunction) => {
 		const errors = validationResult(req);
@@ -79,6 +49,4 @@ const idCardValidator = [
 export {
 	cardValidator,
 	idCardValidator,
-	getCardValidator,
-	cardsByUserValidator,
 };

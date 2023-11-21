@@ -11,10 +11,6 @@ const deckSchema = new mongoose.Schema({
 		type: String,
 		required: true,
 	},
-	color: {
-		type: String,
-		required: true,
-	},
 });
 
 const DeckModel = mongoose.model<Deck>("Deck", deckSchema);

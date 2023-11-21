@@ -8,14 +8,13 @@ import {
 } from "../controllers/deck.controller";
 import {
 	deckValidator,
-	getDecksByUserValidator,
 	deckByIdValidator,
 } from "../validators/deck.validator";
 
 function deckRoutes(app: Express) {
 	app.post("/api/deck", deckValidator, createDeckHandler);
 	app.get("/api/deck?:id", deckByIdValidator, getDecksByIdHandler);
-	app.get("/api/deck/user", getDecksByUserValidator, getDecksByUserHandler);
+	app.get("/api/deck/user/:id?", deckByIdValidator, getDecksByUserHandler);
 	app.put("/api/deck?:id", deckByIdValidator, updateDeckHandler);
 	app.delete("/api/deck?:id", deckByIdValidator, deleteDeckHandler);
 }
