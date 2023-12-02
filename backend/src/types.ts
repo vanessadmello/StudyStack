@@ -29,4 +29,6 @@ export type Deck = {
 	_id?: string;
 	userId: string;
 	name: string;
+	toReview?: number;
+	reviewed?: number;
 };

@@ -2,7 +2,7 @@ import { Express } from "express";
 import {
 	createDeckHandler,
 	updateDeckHandler,
-	getDecksByIdHandler,
+	getDeckByIdHandler,
 	getDecksByUserHandler,
 	deleteDeckHandler,
 } from "../controllers/deck.controller";
@@ -13,7 +13,7 @@ import {
 
 function deckRoutes(app: Express) {
 	app.post("/api/deck", deckValidator, createDeckHandler);
-	app.get("/api/deck?:id", deckByIdValidator, getDecksByIdHandler);
+	app.get("/api/deck?:id", deckByIdValidator, getDeckByIdHandler);
 	app.get("/api/deck/user/:id?", deckByIdValidator, getDecksByUserHandler);
 	app.put("/api/deck?:id", deckByIdValidator, updateDeckHandler);
 	app.delete("/api/deck?:id", deckByIdValidator, deleteDeckHandler);

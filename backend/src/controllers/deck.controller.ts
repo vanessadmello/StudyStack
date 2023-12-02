@@ -7,6 +7,8 @@ import {
 	deleteDeck,
 } from "../services/deck.service";
 import logger from "../utils/logger";
+import { getCardsByDeckNoPopulate } from "../services/card.service";
+import { Deck } from "../types";
 
 async function createDeckHandler(req: Request, res: Response) {
 	try {
@@ -19,10 +21,21 @@ async function createDeckHandler(req: Request, res: Response) {
 	}
 }
 
-// TODO Get Spaced and Unspaced Totals
 async function getDecksByUserHandler(req: Request, res: Response) {
 	try {
-		const decks = await getDecksByUser(req.query.id as string);
+		const deckInfo: Deck[] = await getDecksByUser(req.query.id as string);
+		var decks: Deck[] = [];
+		for (var i = 0; i < deckInfo.length; i++) {
+			const cards = await getCardsByDeckNoPopulate(deckInfo[i]._id || "");
+			var deck: Deck = {
+				name: deckInfo[i].name,
+				userId: deckInfo[i].userId,
+				_id: deckInfo[i]._id,
+				reviewed: cards.spaced.length,
+				toReview: cards.notSpaced.length,
+			};
+			decks.push(deck);
+		}
 		if (decks) {
 			res.status(200).send(decks);
 		} else {
@@ -33,7 +46,8 @@ async function getDecksByUserHandler(req: Request, res: Response) {
 		res.status(409).send(e.message);
 	}
 }
-async function getDecksByIdHandler(req: Request, res: Response) {
+
+async function getDeckByIdHandler(req: Request, res: Response) {
 	try {
 		const id = req.query.id as string;
 		const deck = await getDeckById(id);
@@ -77,7 +91,7 @@ async function deleteDeckHandler(req: Request, res: Response) {
 export {
 	createDeckHandler,
 	getDecksByUserHandler,
-	getDecksByIdHandler,
+	getDeckByIdHandler,
 	updateDeckHandler,
 	deleteDeckHandler,
 };

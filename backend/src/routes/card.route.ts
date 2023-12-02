@@ -14,7 +14,7 @@ import {
 function cardRoutes(app: Express) {
 	app.post("/api/card", cardValidator, createCardHandler);
 	app.get("/api/card/deck?:id", idCardValidator, getCardsByDeckHandler);
-	app.get("/api/cards?:id", idCardValidator, getCardsByUserHandler);
+	app.get("/api/card/user?:id", idCardValidator, getCardsByUserHandler);
 	app.put("/api/card?:id", idCardValidator, updateCardHandler);
 	app.delete("/api/card?:id", idCardValidator, deleteCardHandler);
 }

@@ -37,6 +37,18 @@ const getCardsByDeck = async (deckId: string) => {
 	}
 };
 
+const getCardsByDeckNoPopulate = async (deckId: string) => {
+	try {
+		const cards: Array<Card> = await CardModel.find({
+			deck: deckId,
+		}).lean();
+		return assignCards(cards);
+	} catch (e: any) {
+		logger.error(e.message);
+		throw new Error(e);
+	}
+};
+
 const updateCard = async (id: string, cardInput: Card) => {
 	try {
 		await CardModel.findOneAndUpdate({ _id: id }, cardInput);
@@ -81,4 +93,11 @@ const assignCards = (cards: Array<Card>) => {
 
 // TODO Delete Cards By User
 
-export { createCard, getCardsByDeck, getCardsByUser, updateCard, deleteCard };
+export {
+	createCard,
+	getCardsByDeck,
+	getCardsByUser,
+	updateCard,
+	deleteCard,
+	getCardsByDeckNoPopulate,
+};
