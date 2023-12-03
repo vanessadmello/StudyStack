@@ -17,14 +17,9 @@ export const getCardsByDeck = (deckId) => {
 	});
 };
 
-export const createCard = (userId, deckId, data) => {
-	userId = "652bfb0aba2c6991d9965578";
-	return axios.post("http://127.0.0.1:5000/api/card", {
-		userId: userId,
-		question: "who died on 20th November",
-		deck: [deckId],
-		answer: "Prerna Sharma",
-	});
+export const createCard = (data) => {
+	data = { ...data, userId: "652bfb0aba2c6991d9965578" };
+	return axios.post("http://127.0.0.1:5000/api/card", data);
 };
 
 export const updateCard = (cardId, data) => {

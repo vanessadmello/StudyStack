@@ -12,26 +12,30 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import NavBar from "../../common/NavBar/NavBar";
 import Footer from "../../common/Footer/Footer";
-
-const data = [
-	{ question: "What is your name", answer: "code" },
-	{
-		question: "Some Random",
-		answer: "code",
-	},
-	{ question: "What is age", answer: "code" },
-	{ question: "What is age2", answer: "code" },
-];
+import { getCardsByDeck } from "../../service/card.service";
 
 export default function ReviewCards() {
 	const navigate = useNavigate();
 	const location = useLocation();
-	const [title, setTitle] = useState("");
+	const [cards, setCards] = useState([]);
+	const [deckName, setDeckName] = useState("");
+	
+	async function getCards(deckId) {
+		getCardsByDeck(deckId)
+			.then((res) => {
+				var card = res.data.spaced;
+				Array.prototype.push.apply(card, res.data.notSpaced);
+				setCards(card);
+			})
+			.catch((err) => console.log(err));
+	}
+
 	useEffect(() => {
 		if (location.state === null) {
 			navigate("/decks");
 		} else {
-			setTitle(location.state.title);
+			setDeckName(location.state.name);
+			getCards(location.state.deckId);
 		}
 	}, [location.state, navigate]);
 
@@ -46,20 +50,23 @@ export default function ReviewCards() {
 							variant="h6"
 							component="div"
 						>
-							{title}
+							{deckName}
 						</Typography>
 
 						<List>
-							{data.map((d) => (
+							{cards.map((card) => (
 								<ListItem
 									sx={{
 										border: `2px solid ${pink[400]}`,
 										mt: 2,
 									}}
-									key={d.question}
+									key={card._id}
 								>
-									<ListItemText primary={d.question} />
-									<Link to={"/viewCard"} state={{ data: d }}>
+									<ListItemText primary={card.question} />
+									<Link
+										to={"/viewCard"}
+										state={{ data: card }}
+									>
 										<IconButton
 											edge="end"
 											aria-label="delete"

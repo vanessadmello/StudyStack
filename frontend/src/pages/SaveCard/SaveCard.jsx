@@ -6,36 +6,89 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Button from "@mui/material/Button";
+import Snackbar from "@mui/material/Snackbar";
 import Container from "@mui/material/Container";
-import { Box } from "@mui/material";
+import Box from "@mui/material/Box";
 import NavBar from "../../common/NavBar/NavBar";
 import Footer from "../../common/Footer/Footer";
 import Editor from "../../common/Editor/Editor";
+import { updateCard, createCard } from "../../service/card.service";
+import { getDecksByUser } from "../../service/deck.service";
 
 export default function SaveCard({ isEdit }) {
 	const navigate = useNavigate();
 	const location = useLocation();
+
+	const [data, setData] = useState(
+		location.state != null ? location.state.data : {}
+	);
+	const [open, setOpen] = React.useState(false);
+	const [decks, setDecks] = useState([]);
+	const [deckSelected, setDeckSelected] = useState(
+		location.state != null ? data.deck[0]._id : ""
+	);
+	const [message, setMessage] = useState("");
+
+	const handleClose = () => {
+		setOpen(false);
+		navigate("/decks");
+	};
+	const handleChangeOnAnswer = (content, delta, source, editor) => {
+		const contentJson = editor.getContents();
+		setData({ ...data, answer: contentJson });
+	};
+	const handleDeckChange = (event) => {
+		setDeckSelected(event.target.value);
+	};
+
+	const submitData = async () => {
+		const card = {
+			question: data.question,
+			answer: data.answer,
+			deck: [deckSelected],
+		};
+		if (isEdit) {
+			updateCard(data._id, card)
+				.then((res) => {
+					if (res.status === 200) {
+						setMessage(res.data.message + " :)");
+						setOpen(true);
+					} else {
+						setMessage("Card Could Not Be Updated :(");
+					}
+				})
+				.catch((err) => console.log(err));
+		} else {
+			createCard(card)
+				.then((res) => {
+					if (res.status === 200) {
+						setMessage("Card Successfully Created :)");
+						setOpen(true);
+					} else {
+						setMessage("Card Could Not Be Created :(");
+					}
+				})
+				.catch((err) => console.log(err));
+		}
+	};
+
+	async function getDecks() {
+		getDecksByUser("")
+			.then((res) => {
+				setDecks(res.data);
+			})
+			.catch((err) => console.log(err));
+	}
+
 	useEffect(() => {
+		getDecks();
 		if (isEdit && location.state === null) {
 			navigate("/decks");
 		} else if (isEdit) {
 			setData(location.state.data);
 		}
-	}, []);
+	}, [isEdit, location.state, navigate]);
 
-	const [data, setData] = useState(
-		location.state != null ? location.state.data : {}
-	);
-
-	const [exampleState, setExampleState] = useState([]);
-
-	const [deck, setDeck] = useState("Data Structure");
-
-	const handleChange = (event) => {
-		setDeck(event.target.value);
-	};
-
-	const decks = ["Data Structure", "Maths", "Music Theory"];
 	return (
 		<div>
 			<NavBar />
@@ -57,15 +110,16 @@ export default function SaveCard({ isEdit }) {
 					variant="outlined"
 					defaultValue={data.question}
 					onChange={(event) => {
-						setExampleState(event.target.value);
+						setData({ ...data, question: event.target.value });
 					}}
 				></TextField>
 
-				{isEdit ? (
-					<Editor isReadOnly={false} answer={data.answer} />
-				) : (
-					<Editor isReadOnly={false} answer={""} />
-				)}
+				<Editor
+					answer={data.answer}
+					isReadOnly={false}
+					onChange={handleChangeOnAnswer}
+				/>
+
 				<Box
 					sx={{
 						display: "flex",
@@ -89,13 +143,13 @@ export default function SaveCard({ isEdit }) {
 						<Select
 							labelId="select-label"
 							id="select"
-							value={deck}
+							value={deckSelected}
 							label="Deck*"
-							onChange={handleChange}
+							onChange={handleDeckChange}
 						>
 							{decks.map((deck) => (
-								<MenuItem key={deck} value={deck}>
-									{deck}
+								<MenuItem key={deck._id} value={deck._id}>
+									{deck.name}
 								</MenuItem>
 							))}
 						</Select>
@@ -106,10 +160,17 @@ export default function SaveCard({ isEdit }) {
 							height: "58px",
 						}}
 						variant="contained"
+						onClick={submitData}
 					>
 						Submit
 					</Button>
 				</Box>
+				<Snackbar
+					open={open}
+					autoHideDuration={2000}
+					onClose={handleClose}
+					message={message}
+				/>
 			</Container>
 			<Footer />
 		</div>

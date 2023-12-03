@@ -1,17 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import "highlight.js/styles/stackoverflow-dark.css";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import "./Editor.css";
 
-export default function Editor({ isReadOnly, answer }) {
-	const [code, setCode] = useState(answer);
-
-	const handleProcedureContentChange = (content, delta, source, editor) => {
-		const contentJson = editor.getContents();
-		setCode(contentJson);
-	};
-
+export default function Editor({ isReadOnly, answer, onChange }) {
 	const modules = {
 		syntax: true,
 		toolbar: [
@@ -49,7 +42,7 @@ export default function Editor({ isReadOnly, answer }) {
 
 	return isReadOnly ? (
 		<ReactQuill
-			value={code}
+			value={answer}
 			style={{ height: "260px" }}
 			theme="snow"
 			modules={{
@@ -60,10 +53,10 @@ export default function Editor({ isReadOnly, answer }) {
 		/>
 	) : (
 		<ReactQuill
-			value={code}
+			defaultValue={answer}
 			placeholder="Enter Your Answer"
 			style={{ height: "260px" }}
-			onChange={handleProcedureContentChange}
+			onChange={onChange}
 			theme="snow"
 			modules={modules}
 			formats={formats}

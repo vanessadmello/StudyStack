@@ -15,8 +15,8 @@ const cardValidator = [
 	body("answer")
 		.exists()
 		.withMessage("Answer is Required")
-		.isString()
-		.withMessage("Answer should be string"),
+		.isObject()
+		.withMessage("Answer should be an object"),
 	body("deck")
 		.exists()
 		.withMessage("Deck is Required")
@@ -46,7 +46,4 @@ const idCardValidator = [
 	},
 ];
 
-export {
-	cardValidator,
-	idCardValidator,
-};
+export { cardValidator, idCardValidator };
