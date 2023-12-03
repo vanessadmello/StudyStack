@@ -4,15 +4,36 @@ import pink from "@mui/material/colors/pink";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
+import IconButton from "@mui/material/IconButton";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
-import TableInfo from "./TableInfo";
 import QuizIcon from "@mui/icons-material/Quiz";
 import FactCheckIcon from "@mui/icons-material/FactCheck";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
+import TableInfo from "./TableInfo";
+import DeckDialog from "../../DeckDialog/DeckDialog";
 import { getDecksByUser } from "../../../service/deck.service";
 
 export default function DeckCard() {
 	const [decks, setDecks] = useState([]);
+	const [dialogState, setDialogState] = useState({
+		data: {},
+		isEdit: false,
+		state: false,
+	});
+	const [snackBar, setSnackBar] = React.useState({
+		severity: "success",
+		open: false,
+		message: "",
+	});
+
+	const handleClose = async () => {
+		setSnackBar({ ...snackBar, open: false });
+		await getDecks();
+	};
 
 	async function getDecks() {
 		getDecksByUser("")
@@ -52,15 +73,43 @@ export default function DeckCard() {
 							sx={{ mb: 3, border: `2.5px solid ${pink[400]}` }}
 						>
 							<div>
+								<Grid container justifyContent="flex-end">
+									<IconButton
+										edge="start"
+										aria-label="edit"
+										value={deck}
+										onClick={() => {
+											setDialogState({
+												data: deck,
+												isEdit: true,
+												state: true,
+											});
+										}}
+									>
+										<EditIcon
+											style={{ color: pink[300] }}
+										/>
+									</IconButton>
+									<IconButton
+										edge="start"
+										aria-label="delete"
+										value={deck}
+										onClick={() => {
+											setDialogState({
+												data: deck,
+												isEdit: false,
+												state: true,
+											});
+										}}
+									>
+										<DeleteIcon
+											style={{ color: pink[300] }}
+										/>
+									</IconButton>
+								</Grid>
 								<Typography
 									sx={{
-										ml:
-											window.innerWidth > 850
-												? window.innerWidth > 1100
-													? 6
-													: 10
-												: 4,
-										pt: 3,
+										ml: 2,
 										fontSize: 20,
 										textAlign: "center",
 									}}
@@ -103,6 +152,27 @@ export default function DeckCard() {
 						</Paper>
 					</Grid>
 				))}
+				<Snackbar
+					anchorOrigin={{ vertical: "top", horizontal: "right" }}
+					open={snackBar.open}
+					autoHideDuration={2000}
+					onClose={handleClose}
+				>
+					<MuiAlert
+						elevation={6}
+						variant="filled"
+						onClose={handleClose}
+						severity={snackBar.severity}
+						sx={{ width: "100%" }}
+					>
+						{snackBar.message}
+					</MuiAlert>
+				</Snackbar>
+				<DeckDialog
+					dialogState={dialogState}
+					setDialogState={setDialogState}
+					setSnackBar={setSnackBar}
+				/>
 			</Grid>
 		</div>
 	);
