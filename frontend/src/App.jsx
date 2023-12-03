@@ -6,6 +6,8 @@ import Deck from "./pages/Deck/Deck";
 import SaveCard from "./pages/SaveCard/SaveCard";
 import Quiz from "./pages/Quiz/Quiz";
 import ReviewCards from "./pages/ReviewCards/ReviewCards";
+import Introduction from "./pages/Introduction/Introduction";
+import Authentication from "./pages/Authentication/Authentication";
 
 const THEME = createTheme({
 	typography: {
@@ -25,6 +27,15 @@ function App() {
 	return (
 		<ThemeProvider theme={THEME}>
 			<Routes>
+				<Route path="/" element={<Introduction />} />
+				<Route
+					path="/login"
+					element={<Authentication isLogin={true} />}
+				/>
+				<Route
+					path="/register"
+					element={<Authentication isLogin={false} />}
+				/>
 				<Route path="/home" element={<Home />} />
 				<Route path="/decks" element={<Deck />} />
 				<Route path="/addCard" element={<SaveCard isEdit={false} />} />
