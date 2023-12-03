@@ -24,12 +24,13 @@ userRoutes(app);
 deckRoutes(app);
 
 const port: number = config.get<number>("port");
+const hostName: string = config.get<string>("hostName");
 
 app.get("/api", (req: Request, res: Response) => {
 	res.status(200).send({ message: "FlashCard App is Running" });
 });
 
-app.listen(port, async () => {
-	logger.info(`App listening at ${port}`);
+app.listen(port, hostName, async () => {
+	logger.info(`App on: http://${hostName}:${port}`);
 	await connectionDb();
 });
