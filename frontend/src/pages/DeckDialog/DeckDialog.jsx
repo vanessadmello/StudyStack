@@ -15,6 +15,10 @@ export default function DeckDialog({
 	const handleCloseDialog = () => {
 		setDialogState({ ...dialogState, state: false });
 	};
+	const text =
+		dialogState.isEdit && dialogState.isCreate
+			? "Create New Deck"
+			: "Do you want to edit the following deck?";
 
 	const handleChangeDialog = () => {
 		if (dialogState.isEdit && dialogState.isCreate) {
@@ -103,9 +107,7 @@ export default function DeckDialog({
 			>
 				{dialogState.isEdit ? (
 					<div style={{ flexGrow: 1, textAlign: "center" }}>
-						<DialogTitle>
-							{"Do you want to edit the following deck?"}
-						</DialogTitle>
+						<DialogTitle>{text}</DialogTitle>
 						<TextField
 							id="outlined-basic"
 							sx={{

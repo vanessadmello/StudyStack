@@ -53,8 +53,8 @@ export default function DeckCard() {
 				container
 				spacing={window.innerWidth > 850 ? 3.5 : 2}
 				sx={{
-					mr: 2,
-					ml: 2,
+					mx: 2,
+					mb: 3,
 					display: { xs: "flex" },
 				}}
 			>
