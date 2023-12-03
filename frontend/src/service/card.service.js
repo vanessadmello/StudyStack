@@ -29,7 +29,6 @@ export const updateCard = (cardId, data) => {
 };
 
 export const deleteCard = (cardId) => {
-	cardId = "652c0ac08d23a576a53d9e81";
 	return axios.delete("http://127.0.0.1:5000/api/card", {
 		params: { id: cardId },
 	});
