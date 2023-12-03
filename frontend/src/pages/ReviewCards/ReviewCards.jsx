@@ -6,6 +6,7 @@ import Grid from "@mui/material/Grid";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
 import ListItemText from "@mui/material/ListItemText";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
@@ -21,16 +22,19 @@ export default function ReviewCards() {
 	const location = useLocation();
 	const [cards, setCards] = useState([]);
 	const [deckName, setDeckName] = useState("");
-	const [message, setMessage] = useState("");
-	const [open, setOpen] = React.useState(false);
-	const [dialogState, setDialogState] = React.useState(false);
-	
+	const [snackBar, setSnackbar] = React.useState({
+		severity: "success",
+		open: false,
+		message: "",
+	});
+	const [dialogState, setDialogState] = React.useState({
+		state: false,
+		data: {},
+	});
+
 	const handleClose = () => {
-		setOpen(false);
 		getCards(location.state.deckId);
-	};
-	const openDialog = () => {
-		setDialogState(true);
+		setSnackbar({ ...snackBar, open: false });
 	};
 
 	async function getCards(deckId) {
@@ -84,33 +88,50 @@ export default function ReviewCards() {
 											edge="end"
 											aria-label="delete"
 										>
-											<EditIcon />
+											<EditIcon
+												style={{ color: pink[300] }}
+											/>
 										</IconButton>
 									</Link>
 									<IconButton
-										edge="end"
 										aria-label="delete"
-										onClick={openDialog}
+										onClick={() => {
+											setDialogState({
+												data: card,
+												state: true,
+											});
+										}}
 									>
-										<DeleteIcon />
+										<DeleteIcon
+											style={{ color: pink[300] }}
+										/>
 									</IconButton>
-									<DialogDelete
-										dialogState={dialogState}
-										setDialogState={setDialogState}
-										value={card}
-										setMessage={setMessage}
-										setOpen={setOpen}
-									/>
 								</ListItem>
 							))}
 						</List>
 					</Grid>
 				</Grid>
 				<Snackbar
-					open={open}
+					anchorOrigin={{ vertical: "top", horizontal: "right" }}
+					open={snackBar.open}
 					autoHideDuration={2000}
 					onClose={handleClose}
-					message={message}
+				>
+					<MuiAlert
+						elevation={6}
+						variant="filled"
+						onClose={handleClose}
+						severity={snackBar.severity}
+						sx={{ width: "100%" }}
+					>
+						{snackBar.message}
+					</MuiAlert>
+				</Snackbar>
+				<DialogDelete
+					dialogState={dialogState}
+					setDialogState={setDialogState}
+					snackBar={snackBar}
+					setSnackbar={setSnackbar}
 				/>
 			</Container>
 			<Footer />

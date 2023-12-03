@@ -8,6 +8,7 @@ import Select from "@mui/material/Select";
 import Button from "@mui/material/Button";
 import Snackbar from "@mui/material/Snackbar";
 import Container from "@mui/material/Container";
+import MuiAlert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
 import NavBar from "../../common/NavBar/NavBar";
 import Footer from "../../common/Footer/Footer";
@@ -22,15 +23,18 @@ export default function SaveCard({ isEdit }) {
 	const [data, setData] = useState(
 		location.state != null ? location.state.data : {}
 	);
-	const [open, setOpen] = React.useState(false);
 	const [decks, setDecks] = useState([]);
 	const [deckSelected, setDeckSelected] = useState(
 		location.state != null ? data.deck[0]._id : ""
 	);
-	const [message, setMessage] = useState("");
+	const [snackBar, setSnackBar] = React.useState({
+		severity: "success",
+		open: false,
+		message: "",
+	});
 
 	const handleClose = () => {
-		setOpen(false);
+		setSnackBar({ ...snackBar, open: false });
 		navigate("/decks");
 	};
 	const handleChangeOnAnswer = (content, delta, source, editor) => {
@@ -51,10 +55,17 @@ export default function SaveCard({ isEdit }) {
 			updateCard(data._id, card)
 				.then((res) => {
 					if (res.status === 200) {
-						setMessage(res.data.message + " :)");
-						setOpen(true);
+						setSnackBar({
+							severity: "success",
+							message: res.data.message + " :)",
+							open: true,
+						});
 					} else {
-						setMessage("Card Could Not Be Updated :(");
+						setSnackBar({
+							severity: "error",
+							message: "Card Could Not Be Updated :(",
+							open: true,
+						});
 					}
 				})
 				.catch((err) => console.log(err));
@@ -62,10 +73,17 @@ export default function SaveCard({ isEdit }) {
 			createCard(card)
 				.then((res) => {
 					if (res.status === 200) {
-						setMessage("Card Successfully Created :)");
-						setOpen(true);
+						setSnackBar({
+							severity: "success",
+							message: "Card Successfully Created :)",
+							open: true,
+						});
 					} else {
-						setMessage("Card Could Not Be Created :(");
+						setSnackBar({
+							severity: "error",
+							message: "Card Could Not Be Created :(",
+							open: true,
+						});
 					}
 				})
 				.catch((err) => console.log(err));
@@ -166,11 +184,21 @@ export default function SaveCard({ isEdit }) {
 					</Button>
 				</Box>
 				<Snackbar
-					open={open}
+					anchorOrigin={{ vertical: "top", horizontal: "right" }}
+					open={snackBar.open}
 					autoHideDuration={2000}
 					onClose={handleClose}
-					message={message}
-				/>
+				>
+					<MuiAlert
+						elevation={6}
+						variant="filled"
+						onClose={handleClose}
+						severity={snackBar.severity}
+						sx={{ width: "100%" }}
+					>
+						{snackBar.message}
+					</MuiAlert>
+				</Snackbar>
 			</Container>
 			<Footer />
 		</div>

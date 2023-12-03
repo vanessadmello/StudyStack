@@ -1,8 +1,11 @@
 import axios from "axios";
 
+const API_URL = process.env.REACT_APP_DEV;
+console.log(API_URL);
+
 export const getCardsByUser = (userId) => {
 	userId = "652bfb0aba2c6991d9965578";
-	return axios.get("http://127.0.0.1:5000/api/card/user", {
+	return axios.get(API_URL + "card/user", {
 		params: {
 			id: userId,
 		},
@@ -10,7 +13,7 @@ export const getCardsByUser = (userId) => {
 };
 
 export const getCardsByDeck = (deckId) => {
-	return axios.get("http://127.0.0.1:5000/api/card/deck", {
+	return axios.get(API_URL + "card/deck", {
 		params: {
 			id: deckId,
 		},
@@ -19,17 +22,17 @@ export const getCardsByDeck = (deckId) => {
 
 export const createCard = (data) => {
 	data = { ...data, userId: "652bfb0aba2c6991d9965578" };
-	return axios.post("http://127.0.0.1:5000/api/card", data);
+	return axios.post(API_URL + "card", data);
 };
 
 export const updateCard = (cardId, data) => {
-	return axios.put("http://127.0.0.1:5000/api/card", data, {
+	return axios.put(API_URL + "card", data, {
 		params: { id: cardId },
 	});
 };
 
 export const deleteCard = (cardId) => {
-	return axios.delete("http://127.0.0.1:5000/api/card", {
+	return axios.delete(API_URL + "card", {
 		params: { id: cardId },
 	});
 };
