@@ -3,7 +3,7 @@ import axios from "axios";
 const API_URL = process.env.REACT_APP_DEV;
 
 export const registerUser = (data) => {
-	return axios.post(API_URL + "user", data);
+	return axios.post(API_URL + "user", data, { validateStatus: false });
 };
 
 export const loginUser = (data) => {

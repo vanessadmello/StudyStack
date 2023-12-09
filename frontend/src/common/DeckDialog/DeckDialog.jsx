@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import TextField from "@mui/material/TextField";
@@ -31,18 +31,12 @@ export default function DeckDialog({
 							message: "Deck Created Successfully :)",
 							open: true,
 						});
-					} else {
-						setSnackBar({
-							severity: "error",
-							message: "Deck Could Not Be Deleted :(",
-							open: true,
-						});
 					}
 				})
 				.catch((err) =>
 					setSnackBar({
 						severity: "error",
-						message: err.message,
+						message: "Deck Could Not Be Deleted :(",
 						open: true,
 					})
 				);
@@ -55,18 +49,12 @@ export default function DeckDialog({
 							message: res.data.message + " :)",
 							open: true,
 						});
-					} else {
-						setSnackBar({
-							severity: "error",
-							message: "Deck Could Not Be Updated :(",
-							open: true,
-						});
 					}
 				})
 				.catch((err) =>
 					setSnackBar({
 						severity: "error",
-						message: err.message,
+						message: "Deck Could Not Be Updated :(",
 						open: true,
 					})
 				);
@@ -79,18 +67,12 @@ export default function DeckDialog({
 							message: res.data.message + " :)",
 							open: true,
 						});
-					} else {
-						setSnackBar({
-							severity: "error",
-							message: "Deck Could Not Be Deleted :(",
-							open: true,
-						});
 					}
 				})
 				.catch((err) =>
 					setSnackBar({
 						severity: "error",
-						message: err.message,
+						message: "Deck Could Not Be Deleted :(",
 						open: true,
 					})
 				);
