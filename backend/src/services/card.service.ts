@@ -68,8 +68,8 @@ const deleteCard = async (id: string, cardInput: Card) => {
 };
 
 const assignCards = (cards: Array<Card>) => {
-	var cardsSpaced: Array<Card> = [];
-	var cardsNotSpaced: Array<Card> = [];
+	var cardsReviewed: Array<Card> = [];
+	var cardsNotReviewed: Array<Card> = [];
 	if (cards) {
 		cards.forEach((card) => {
 			var currentDate = new Date();
@@ -77,21 +77,28 @@ const assignCards = (cards: Array<Card>) => {
 			const spacedDate = new Date(
 				card.spacedAt.getTime() + spacedRep * 24 * 60 * 60 * 1000
 			);
-			if (spacedDate <= currentDate) {
-				cardsSpaced.push(card);
+			if (spacedDate >= currentDate) {
+				cardsReviewed.push(card);
 			} else {
-				cardsNotSpaced.push(card);
+				cardsNotReviewed.push(card);
 			}
 		});
 	}
 	const cardObj = {
-		spaced: cardsSpaced,
-		notSpaced: cardsNotSpaced,
+		reviewed: cardsReviewed,
+		toReview: cardsNotReviewed,
 	};
 	return cardObj;
 };
 
-// TODO Delete Cards By User
+const deleteCardByUser = async (userId: string) => {
+	try {
+		await CardModel.deleteMany({ userId: userId });
+	} catch (e: any) {
+		logger.error(e.message);
+		throw new Error(e);
+	}
+};
 
 export {
 	createCard,
@@ -100,4 +107,5 @@ export {
 	updateCard,
 	deleteCard,
 	getCardsByDeckNoPopulate,
+	deleteCardByUser,
 };

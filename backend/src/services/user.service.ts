@@ -1,10 +1,11 @@
-import mongoose from "mongoose";
 import UserModel from "../models/user.model";
 import { User } from "../types";
 import logger from "../utils/logger";
 import bcrypt from "bcrypt";
 import config from "config";
 import { omit } from "lodash";
+import { deleteCardByUser } from "./card.service";
+import { deleteDeckByUser } from "./deck.service";
 
 const registerUser = async (userInput: User) => {
 	try {
@@ -47,8 +48,8 @@ const updateUserPassword = async (id: string, password: string) => {
 const deleteUser = async (id: string) => {
 	try {
 		await UserModel.findOneAndRemove({ _id: id });
-		// TODO : Add service to delete all decks
-		// TODO : Add service to delete all cards
+		await deleteCardByUser(id);
+		await deleteDeckByUser(id);
 	} catch (e: any) {
 		logger.error(e.message);
 		throw new Error(e);

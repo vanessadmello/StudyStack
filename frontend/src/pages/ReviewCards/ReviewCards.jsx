@@ -40,8 +40,8 @@ export default function ReviewCards() {
 	async function getCards(deckId) {
 		getCardsByDeck(deckId)
 			.then((res) => {
-				var card = res.data.spaced;
-				Array.prototype.push.apply(card, res.data.notSpaced);
+				var card = res.data.reviewed;
+				Array.prototype.push.apply(card, res.data.toReview);
 				setCards(card);
 			})
 			.catch((err) => console.log(err));

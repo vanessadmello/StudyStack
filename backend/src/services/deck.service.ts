@@ -47,6 +47,13 @@ const deleteDeck = async (id: string) => {
 	}
 };
 
-// TODO Delete Decks By User
+const deleteDeckByUser = async (userId: string) => {
+	try {
+		await DeckModel.deleteMany({ userId: userId });
+	} catch (e: any) {
+		logger.error(e.message);
+		throw new Error(e);
+	}
+};
 
-export { createDeck, getDeckById, getDecksByUser, updateDeck, deleteDeck };
+export { createDeck, getDeckById, getDecksByUser, updateDeck, deleteDeck, deleteDeckByUser};

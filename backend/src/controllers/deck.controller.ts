@@ -10,10 +10,10 @@ import logger from "../utils/logger";
 import { getCardsByDeckNoPopulate } from "../services/card.service";
 import { Deck } from "../types";
 
+// TODO: Unique Decks Only
 async function createDeckHandler(req: Request, res: Response) {
 	try {
 		const deck = await createDeck(req.body);
-		// TODO: Unique Decks Only
 		return res.status(200).send(deck);
 	} catch (e: any) {
 		logger.error(e.message);
@@ -31,8 +31,8 @@ async function getDecksByUserHandler(req: Request, res: Response) {
 				name: deckInfo[i].name,
 				userId: deckInfo[i].userId,
 				_id: deckInfo[i]._id,
-				reviewed: cards.spaced.length,
-				toReview: cards.notSpaced.length,
+				reviewed: cards.reviewed.length,
+				toReview: cards.toReview.length,
 			};
 			decks.push(deck);
 		}
