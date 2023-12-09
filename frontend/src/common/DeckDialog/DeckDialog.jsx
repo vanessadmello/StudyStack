@@ -15,6 +15,7 @@ export default function DeckDialog({
 	const handleCloseDialog = () => {
 		setDialogState({ ...dialogState, state: false });
 	};
+
 	const text =
 		dialogState.isEdit && dialogState.isCreate
 			? "Create New Deck"

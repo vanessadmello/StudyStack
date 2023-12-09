@@ -8,14 +8,14 @@ export default function Editor({ isReadOnly, answer, onChange }) {
 	const modules = {
 		syntax: true,
 		toolbar: [
-			["bold", "italic", "underline", "strike"], // toggled buttons
+			["bold", "italic", "underline", "strike"],
 			["blockquote", "code-block"],
-			["formula"][({ header: 1 }, { header: 2 })], // custom button values
+			["formula"][({ header: 1 }, { header: 2 })],
 			[{ list: "ordered" }, { list: "bullet" }],
-			[{ script: "sub" }, { script: "super" }], // superscript/subscript
-			[{ indent: "-1" }, { indent: "+1" }], // outdent/indent
-			[{ size: ["small", false, "large", "huge"] }], // custom dropdown
-			[{ color: [] }], // dropdown with defaults from theme
+			[{ script: "sub" }, { script: "super" }], 
+			[{ indent: "-1" }, { indent: "+1" }], 
+			[{ size: ["small", false, "large", "huge"] }], 
+			[{ color: [] }], 
 			[{ align: [] }],
 			["clean"],
 		],

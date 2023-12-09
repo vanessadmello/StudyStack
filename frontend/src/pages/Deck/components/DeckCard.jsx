@@ -14,7 +14,7 @@ import FactCheckIcon from "@mui/icons-material/FactCheck";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import TableInfo from "./TableInfo";
-import DeckDialog from "../../DeckDialog/DeckDialog";
+import DeckDialog from "../../../common/DeckDialog/DeckDialog";
 import { getDecksByUser } from "../../../service/deck.service";
 
 export default function DeckCard() {

@@ -10,7 +10,7 @@ import CardActionArea from "@mui/material/CardActionArea";
 import Typography from "@mui/material/Typography";
 import AddCardIcon from "@mui/icons-material/AddCard";
 import CollectionsBookmarkIcon from "@mui/icons-material/CollectionsBookmark";
-import DeckDialog from "../../DeckDialog/DeckDialog";
+import DeckDialog from "../../../common/DeckDialog/DeckDialog";
 
 export default function AddCard({ isCard }) {
 	const styles = {

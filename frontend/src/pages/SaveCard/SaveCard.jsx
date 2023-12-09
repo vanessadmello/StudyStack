@@ -20,6 +20,12 @@ export default function SaveCard({ isEdit }) {
 	const navigate = useNavigate();
 	const location = useLocation();
 
+	useEffect(() => {
+		if (location.state === null) {
+			navigate("/decks");
+		}
+	}, [location.state, navigate]);
+
 	const [data, setData] = useState(
 		location.state != null ? location.state.data : {}
 	);

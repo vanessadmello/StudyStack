@@ -33,7 +33,7 @@ async function loginUserHandler(req: Request, res: Response) {
 		if (user) {
 			res.status(200).send(user);
 		} else {
-			res.status(404).send({ message: "User Not Found" });
+			res.status(404).send({ message: "Username/Password Incorrect" });
 		}
 	} catch (e: any) {
 		logger.error(e.message);
