@@ -58,6 +58,28 @@ const updateCard = async (id: string, cardInput: Card) => {
 	}
 };
 
+const bulkCardUpdate = async (data: Array<string>) => {
+	try {
+		await CardModel.updateMany({ _id: { $in: data } }, [
+			{
+				$set: {
+					spacedAt: new Date(),
+					spacedRep: {
+						$cond: {
+							if: { $lte: ["$spacedRep", 29] },
+							then: { $multiply: ["$spacedRep", 1.5] },
+							else: 30,
+						},
+					},
+				},
+			},
+		]);
+	} catch (e: any) {
+		logger.error(e.message);
+		throw new Error(e);
+	}
+};
+
 const deleteCard = async (id: string, cardInput: Card) => {
 	try {
 		await CardModel.findOneAndRemove({ _id: id });
@@ -106,6 +128,7 @@ export {
 	getCardsByUser,
 	updateCard,
 	deleteCard,
+	bulkCardUpdate,
 	getCardsByDeckNoPopulate,
 	deleteCardByUser,
 };

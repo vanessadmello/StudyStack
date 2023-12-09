@@ -5,6 +5,7 @@ import {
 	getCardsByUser,
 	getCardsByDeck,
 	updateCard,
+	bulkCardUpdate,
 } from "../services/card.service";
 import logger from "../utils/logger";
 
@@ -52,6 +53,19 @@ async function updateCardHandler(req: Request, res: Response) {
 	}
 }
 
+async function updateAnswerCardHandler(req: Request, res: Response) {
+	try {
+		await bulkCardUpdate(req.body.ids);
+		res.status(200).send({
+			ids: req.body.ids,
+			message: "Cards Updated Successfully",
+		});
+	} catch (e: any) {
+		logger.error(e.message);
+		res.status(409).send(e.message);
+	}
+}
+
 async function deleteCardHandler(req: Request, res: Response) {
 	try {
 		await deleteCard(req.query.id as string, req.body);
@@ -71,4 +85,5 @@ export {
 	getCardsByDeckHandler,
 	updateCardHandler,
 	deleteCardHandler,
+	updateAnswerCardHandler,
 };
