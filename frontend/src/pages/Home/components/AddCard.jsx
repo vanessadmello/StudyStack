@@ -18,7 +18,7 @@ export default function AddCard({ isCard }) {
 		color: pink[400],
 	};
 	const [dialogState, setDialogState] = useState({
-		data: { name: "" },
+		data: { userId: localStorage.getItem("userId"), name: "" },
 		isEdit: true,
 		isCreate: true,
 		state: false,

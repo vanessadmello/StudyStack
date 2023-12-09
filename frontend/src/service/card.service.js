@@ -3,7 +3,6 @@ import axios from "axios";
 const API_URL = process.env.REACT_APP_DEV;
 
 export const getCardsByUser = (userId) => {
-	userId = "652bfb0aba2c6991d9965578";
 	return axios.get(API_URL + "card/user", {
 		params: {
 			id: userId,
@@ -20,7 +19,6 @@ export const getCardsByDeck = (deckId) => {
 };
 
 export const createCard = (data) => {
-	data = { ...data, userId: "652bfb0aba2c6991d9965578" };
 	return axios.post(API_URL + "card", data);
 };
 

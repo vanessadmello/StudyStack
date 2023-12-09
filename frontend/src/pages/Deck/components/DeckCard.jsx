@@ -20,7 +20,9 @@ import { getDecksByUser } from "../../../service/deck.service";
 export default function DeckCard() {
 	const [decks, setDecks] = useState([]);
 	const [dialogState, setDialogState] = useState({
-		data: {},
+		data: {
+			userId: localStorage.getItem("userId"),
+		},
 		isEdit: false,
 		state: false,
 	});
@@ -36,7 +38,7 @@ export default function DeckCard() {
 	};
 
 	async function getDecks() {
-		getDecksByUser("")
+		getDecksByUser(localStorage.getItem("userId"))
 			.then((res) => {
 				setDecks(res.data);
 			})

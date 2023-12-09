@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
@@ -10,9 +10,11 @@ import Footer from "../../common/Footer/Footer";
 export default function Introduction() {
 	const [loggedIn, setLoggedIn] = useState(false);
 
-	if (localStorage.getItem("userId") !== null) {
-		setLoggedIn(true);
-	}
+	useEffect(() => {
+		if (localStorage.getItem("userId") !== null) {
+			setLoggedIn(true);
+		}
+	}, []);
 
 	return (
 		<div>

@@ -23,7 +23,7 @@ export default function DeckDialog({
 
 	const handleChangeDialog = () => {
 		if (dialogState.isEdit && dialogState.isCreate) {
-			createDeck(dialogState.data._id, dialogState.data)
+			createDeck(dialogState.data.userId, dialogState.data)
 				.then((res) => {
 					if (res.status === 200) {
 						setSnackBar({
@@ -36,7 +36,7 @@ export default function DeckDialog({
 				.catch((err) =>
 					setSnackBar({
 						severity: "error",
-						message: "Deck Could Not Be Deleted :(",
+						message: "Deck Could Not Be Created :(",
 						open: true,
 					})
 				);

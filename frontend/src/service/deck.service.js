@@ -2,7 +2,6 @@ import axios from "axios";
 const API_URL = process.env.REACT_APP_DEV;
 
 export const getDecksByUser = (userId) => {
-	userId = "652bfb0aba2c6991d9965578";
 	return axios.get(API_URL + "deck/user", {
 		params: {
 			id: userId,
@@ -19,7 +18,7 @@ export const getDeckById = (deckId) => {
 };
 
 export const createDeck = (userId, data) => {
-	data = { ...data, userId: "652bfb0aba2c6991d9965578" };
+	data = { ...data, userId: userId };
 	return axios.post(API_URL + "deck", data);
 };
 

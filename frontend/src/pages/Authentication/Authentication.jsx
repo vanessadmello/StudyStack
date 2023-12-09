@@ -80,11 +80,11 @@ export default function Authentication({ isLogin }) {
 								message: "User Registered :)",
 								open: true,
 							});
-						} else {
+							navigate("/login");
+						} else if(res.status === 409){
 							setSnackBar({
 								severity: "error",
-								message:
-									res.data.message || res.data.errors[0].msg,
+								message: "Username Exists, Select Another",
 								open: true,
 							});
 						}

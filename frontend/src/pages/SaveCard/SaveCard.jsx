@@ -21,8 +21,8 @@ export default function SaveCard({ isEdit }) {
 	const location = useLocation();
 
 	useEffect(() => {
-		if (location.state === null) {
-			navigate("/decks");
+		if (localStorage.getItem("userId") === null) {
+			navigate("/login");
 		}
 	}, [location.state, navigate]);
 
@@ -53,6 +53,7 @@ export default function SaveCard({ isEdit }) {
 
 	const submitData = async () => {
 		const card = {
+			userId: localStorage.getItem("userId"),
 			question: data.question,
 			answer: data.answer,
 			deck: [deckSelected],
@@ -97,7 +98,7 @@ export default function SaveCard({ isEdit }) {
 	};
 
 	async function getDecks() {
-		getDecksByUser("")
+		getDecksByUser(localStorage.getItem("userId"))
 			.then((res) => {
 				setDecks(res.data);
 			})

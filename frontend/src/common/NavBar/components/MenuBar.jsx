@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
@@ -11,6 +11,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import MenuIcon from "@mui/icons-material/Menu";
 
 export default function MenuBar({ isSetting, loggedIn, pages }) {
+	const navigate = useNavigate();
 	const settings = loggedIn
 		? [
 				{
@@ -40,7 +41,10 @@ export default function MenuBar({ isSetting, loggedIn, pages }) {
 	const handleOpenUserMenu = (event) => {
 		setAnchorElUser(event.currentTarget);
 	};
-	const handleCloseUserMenu = () => {
+	const handleCloseUserMenu = (event) => {
+		if (event.currentTarget.innerText === "Logout") {
+			localStorage.clear();
+		}
 		setAnchorElUser(null);
 	};
 
@@ -75,8 +79,10 @@ export default function MenuBar({ isSetting, loggedIn, pages }) {
 						to={menu.path}
 						key={menu.name}
 						style={{ textDecoration: "none" }}
+						onClick={handleCloseUserMenu}
+						value={menu.name}
 					>
-						<MenuItem onClick={handleCloseUserMenu}>
+						<MenuItem>
 							<Typography
 								sx={{ display: "flex", color: "black" }}
 							>
