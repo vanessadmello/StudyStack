@@ -47,7 +47,7 @@ export default function DeckCard() {
 
 	useEffect(() => {
 		getDecks();
-	});
+	}, []);
 
 	return (
 		<div>

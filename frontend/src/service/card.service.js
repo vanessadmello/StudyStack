@@ -22,6 +22,10 @@ export const createCard = (data) => {
 	return axios.post(API_URL + "card", data);
 };
 
+export const bulkUpdateCardQuix = (data) => {
+	return axios.post(API_URL + "bulkcard", data);
+};
+
 export const updateCard = (cardId, data) => {
 	return axios.put(API_URL + "card", data, {
 		params: { id: cardId },

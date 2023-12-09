@@ -9,7 +9,7 @@ import NavBar from "../../common/NavBar/NavBar";
 import Editor from "../../common/Editor/Editor";
 import Footer from "../../common/Footer/Footer";
 import IconTextContainer from "./components/IconTextContainer";
-import { getCardsByDeck } from "../../service/card.service";
+import { getCardsByDeck, bulkUpdateCardQuix } from "../../service/card.service";
 
 export default function Quiz(props) {
 	const navigate = useNavigate();
@@ -25,7 +25,7 @@ export default function Quiz(props) {
 		if (location.state === null) {
 			navigate("/decks");
 		}
-	});
+	}, []);
 
 	async function getCards() {
 		await getCardsByDeck(location.state.deckId)
@@ -40,12 +40,20 @@ export default function Quiz(props) {
 			.catch((err) => console.log(err));
 	}
 
+	async function bulkUpdate() {
+		const ids = cards.map((card) => card._id);
+		await bulkUpdateCardQuix({ ids: ids })
+			.then(async (res) => {})
+			.catch((err) => console.log(err));
+	}
+
 	const flipCardClick = () => {
 		setIsReview(false);
 	};
 
 	const nextQuestion = () => {
 		if (index + 1 === cards.length) {
+			bulkUpdate();
 			setIsFinished(true);
 		} else {
 			setIndex(index + 1);
