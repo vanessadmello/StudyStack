@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -11,16 +11,26 @@ import PostAddIcon from "@mui/icons-material/PostAdd";
 import MenuBar from "./components/MenuBar";
 import Logo from "./components/Logo";
 
-const pages = [
-	{ name: "Home", icon: <HomeIcon sx={{ mr: 1, pb: 0 }} />, path: "/home" },
-	{
-		name: "Deck",
-		icon: <PostAddIcon sx={{ mr: 1, pb: 0 }} />,
-		path: "/decks",
-	},
-];
-
 function NavBar() {
+	const [loggedIn, setLoggedIn] = useState(false);
+	useEffect(() => {
+		if (localStorage.getItem("userId") !== null) {
+			setLoggedIn(true);
+		}
+	}, []);
+
+	const pages = [
+		{
+			name: "Home",
+			icon: <HomeIcon sx={{ mr: 1, pb: 0 }} />,
+			path: "/home",
+		},
+		{
+			name: "Deck",
+			icon: <PostAddIcon sx={{ mr: 1, pb: 0 }} />,
+			path: "/decks",
+		},
+	];
 	return (
 		<AppBar position="static" sx={{ padding: "0", marginBottom: "20px" }}>
 			<Container maxWidth="false">
@@ -32,7 +42,15 @@ function NavBar() {
 							display: { xs: "flex", md: "none" },
 						}}
 					>
-						<MenuBar isSetting={false} />
+						{loggedIn ? (
+							<MenuBar
+								isSetting={false}
+								loggedIn={loggedIn}
+								pages={pages}
+							/>
+						) : (
+							<div style={{ marginLeft: "3em" }} />
+						)}
 						<Box sx={{ mr: "auto", ml: "auto" }}>
 							<Logo />
 						</Box>
@@ -53,35 +71,43 @@ function NavBar() {
 							display: { xs: "none", md: "flex" },
 						}}
 					>
-						{pages.map((page) => (
-							<Link
-								to={page.path}
-								key={page.name}
-								style={{ textDecoration: "none" }}
-							>
-								<Button
-									sx={{
-										my: 2,
-										mr: 4,
-										color: "white",
-										display: "block",
-									}}
+						{loggedIn &&
+							pages.map((page) => (
+								<Link
+									to={page.path}
+									key={page.name}
+									style={{ textDecoration: "none" }}
 								>
-									<Typography
+									<Button
 										sx={{
-											mr: 1,
-											display: { xs: "none", md: "flex" },
-											color: "inherit",
+											my: 2,
+											mr: 4,
+											color: "white",
+											display: "block",
 										}}
 									>
-										{page.icon}
-										{page.name}
-									</Typography>
-								</Button>
-							</Link>
-						))}
+										<Typography
+											sx={{
+												mr: 1,
+												display: {
+													xs: "none",
+													md: "flex",
+												},
+												color: "inherit",
+											}}
+										>
+											{page.icon}
+											{page.name}
+										</Typography>
+									</Button>
+								</Link>
+							))}
 					</Box>
-					<MenuBar isSetting={true} />
+					<MenuBar
+						isSetting={true}
+						loggedIn={loggedIn}
+						pages={pages}
+					/>
 				</Toolbar>
 			</Container>
 		</AppBar>

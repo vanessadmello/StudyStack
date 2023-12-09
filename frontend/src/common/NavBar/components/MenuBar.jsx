@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
@@ -12,32 +12,27 @@ import MenuIcon from "@mui/icons-material/Menu";
 import HomeIcon from "@mui/icons-material/Home";
 import PostAddIcon from "@mui/icons-material/PostAdd";
 
-export default function MenuBar({ isSetting }) {
-	const settings = [
-		{
-			name: "Account",
-			icon: <AccountCircleIcon sx={{ mr: 1, pb: 0 }} />,
-			path: "/home",
-		},
-		{
-			name: "Logout",
-			icon: <LogoutIcon sx={{ mr: 1, pb: 0 }} />,
-			path: "/home",
-		},
-	];
-
-	const pages = [
-		{
-			name: "Home",
-			icon: <HomeIcon sx={{ mr: 1, pb: 0 }} />,
-			path: "/home",
-		},
-		{
-			name: "Deck",
-			icon: <PostAddIcon sx={{ mr: 1, pb: 0 }} />,
-			path: "/decks",
-		},
-	];
+export default function MenuBar({ isSetting, loggedIn, pages }) {
+	const settings = loggedIn
+		? [
+				{
+					name: "Account",
+					icon: <AccountCircleIcon sx={{ mr: 1, pb: 0 }} />,
+					path: "/home",
+				},
+				{
+					name: "Logout",
+					icon: <LogoutIcon sx={{ mr: 1, pb: 0 }} />,
+					path: "/",
+				},
+		  ]
+		: [
+				{
+					name: "Login",
+					icon: <LogoutIcon sx={{ mr: 1, pb: 0 }} />,
+					path: "/login",
+				},
+		  ];
 
 	const menuItems = isSetting
 		? { icon: <SettingsIcon />, menu: settings, text: "Settings" }
