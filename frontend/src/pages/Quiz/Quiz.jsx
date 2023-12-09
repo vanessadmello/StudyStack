@@ -9,71 +9,49 @@ import NavBar from "../../common/NavBar/NavBar";
 import Editor from "../../common/Editor/Editor";
 import Footer from "../../common/Footer/Footer";
 import IconTextContainer from "./components/IconTextContainer";
+import { getCardsByDeck } from "../../service/card.service";
 
 export default function Quiz(props) {
 	const navigate = useNavigate();
 	const location = useLocation();
 
+	const [cards, setCards] = useState([]);
+	const [index, setIndex] = useState(0);
+	const [isReview, setIsReview] = useState(true);
+	const [isFinished, setIsFinished] = useState(true);
+
 	useEffect(() => {
+		getCards();
 		if (location.state === null) {
 			navigate("/decks");
 		}
-	}, [location.state, navigate]);
+	});
 
-	const [index, setIndex] = useState(0);
-	const [isReview, setIsReview] = useState(true);
-	const [isFinished, setIsFinished] = useState(false);
+	async function getCards() {
+		await getCardsByDeck(location.state.deckId)
+			.then(async (res) => {
+				setCards(res.data.toReview);
+				if (res.data.toReview.length === 0) {
+					setIsFinished(true);
+				} else {
+					setIsFinished(false);
+				}
+			})
+			.catch((err) => console.log(err));
+	}
+
 	const flipCardClick = () => {
 		setIsReview(false);
 	};
+
 	const nextQuestion = () => {
-		if (index + 1 === data.length) {
+		if (index + 1 === cards.length) {
 			setIsFinished(true);
 		} else {
 			setIndex(index + 1);
 			setIsReview(true);
 		}
 	};
-
-	const code = {
-		ops: [
-			{
-				insert: 'var something = "java";',
-			},
-			{
-				attributes: {
-					"code-block": true,
-				},
-				insert: "\n",
-			},
-
-			{
-				insert: '  cout << "";',
-			},
-			{
-				attributes: {
-					"code-block": true,
-				},
-				insert: "\n",
-			},
-			{
-				insert: "}",
-			},
-			{
-				attributes: {
-					"code-block": true,
-				},
-				insert: "\n",
-			},
-			{
-				insert: "Hey Jude don't be so sad \n",
-			},
-		],
-	};
-	const data = [
-		{ question: "what is your name", answer: code },
-		{ question: "what is age", answer: code },
-	];
 
 	return (
 		<div>
@@ -99,7 +77,7 @@ export default function Quiz(props) {
 						}}
 						label="Question"
 						id="outlined-disabled"
-						value={data[index].question}
+						value={cards[index].question}
 					/>
 					<IconTextContainer isReview={true} />
 					<Button
@@ -133,9 +111,9 @@ export default function Quiz(props) {
 						}}
 						label="Question"
 						id="outlined-disabled"
-						value={data[index].question}
+						value={cards[index].question}
 					/>
-					<Editor isReadOnly={true} answer={data[index].answer} />
+					<Editor isReadOnly={true} answer={cards[index].answer} />
 					<Button
 						sx={{
 							mt: 3,

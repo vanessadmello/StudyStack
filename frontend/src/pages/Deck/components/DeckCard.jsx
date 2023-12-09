@@ -47,7 +47,7 @@ export default function DeckCard() {
 
 	useEffect(() => {
 		getDecks();
-	}, []);
+	});
 
 	return (
 		<div>
@@ -130,7 +130,7 @@ export default function DeckCard() {
 								>
 									<Link
 										to={"/quiz"}
-										state={{ deckId: `${deck.name}` }}
+										state={{ deckId: `${deck._id}` }}
 									>
 										<Button variant="outlined">
 											<QuizIcon sx={{ mr: 1.3 }} />

@@ -81,7 +81,7 @@ export default function Authentication({ isLogin }) {
 								open: true,
 							});
 							navigate("/login");
-						} else if(res.status === 409){
+						} else if (res.status === 409) {
 							setSnackBar({
 								severity: "error",
 								message: "Username Exists, Select Another",

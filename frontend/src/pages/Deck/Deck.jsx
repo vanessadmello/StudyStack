@@ -13,7 +13,7 @@ export default function Deck() {
 		} else {
 			setLoggedIn(true);
 		}
-	}, []);
+	}, [navigate]);
 
 	return (
 		<div>

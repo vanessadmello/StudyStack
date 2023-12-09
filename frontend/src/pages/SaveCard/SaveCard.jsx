@@ -17,14 +17,19 @@ import { updateCard, createCard } from "../../service/card.service";
 import { getDecksByUser } from "../../service/deck.service";
 
 export default function SaveCard({ isEdit }) {
-	const navigate = useNavigate();
 	const location = useLocation();
-
+	const navigate = useNavigate();
 	useEffect(() => {
 		if (localStorage.getItem("userId") === null) {
 			navigate("/login");
 		}
-	}, [location.state, navigate]);
+		getDecks();
+		if (isEdit && location.state === null) {
+			navigate("/decks");
+		} else if (isEdit) {
+			setData(location.state.data);
+		}
+	}, [isEdit, navigate, location]);
 
 	const [data, setData] = useState(
 		location.state != null ? location.state.data : {}
@@ -104,15 +109,6 @@ export default function SaveCard({ isEdit }) {
 			})
 			.catch((err) => console.log(err));
 	}
-
-	useEffect(() => {
-		getDecks();
-		if (isEdit && location.state === null) {
-			navigate("/decks");
-		} else if (isEdit) {
-			setData(location.state.data);
-		}
-	}, [isEdit, location.state, navigate]);
 
 	return (
 		<div>
