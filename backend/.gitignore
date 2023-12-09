@@ -21,6 +21,9 @@ public/css/main.css
 # Coverage reports
 coverage
 
+#env data
+config
+
 # API keys and secrets
 .env
 

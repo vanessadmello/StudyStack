@@ -3,7 +3,10 @@ import config from "config";
 import logger from "./logger";
 
 const connectionDb = async () => {
-	const dbURL: string = config.get<string>("dbURL");
+	const production: boolean = config.get<boolean>("production");
+	const dbURL: string = production
+		? config.get<string>("dbURLProd")
+		: config.get<string>("dbURLDev");
 	try {
 		await mongoose.connect(dbURL);
 		logger.info("Connected to MongoDB Successfully");
