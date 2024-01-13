@@ -9,9 +9,9 @@ import NavBar from "../../common/NavBar/NavBar";
 import Editor from "../../common/Editor/Editor";
 import Footer from "../../common/Footer/Footer";
 import IconTextContainer from "./components/IconTextContainer";
-import { getCardsByDeck, bulkUpdateCardQuix } from "../../service/card.service";
+import { getCardsByDeck, bulkUpdateCardQuiz } from "../../service/card.service";
 
-export default function Quiz(props) {
+export default function Quiz() {
 	const navigate = useNavigate();
 	const location = useLocation();
 
@@ -41,9 +41,23 @@ export default function Quiz(props) {
 	}
 
 	async function bulkUpdate() {
-		const ids = cards.map((card) => card._id);
-		await bulkUpdateCardQuix({ ids: ids })
-			.then(async (res) => {})
+		const correctIds = cards
+			.filter((card) => card.status === "correct")
+			.map((card) => card._id);
+
+		const incorrectIds = cards
+			.filter((card) => card.status === "wrong")
+			.map((card) => card._id);
+
+		const data = {
+			userId: localStorage.getItem("userId"),
+			correct: correctIds,
+			incorrect: incorrectIds,
+		};
+
+		await bulkUpdateCardQuiz(data)
+			.then(async (res) => {
+			})
 			.catch((err) => console.log(err));
 	}
 
@@ -51,7 +65,8 @@ export default function Quiz(props) {
 		setIsReview(false);
 	};
 
-	const nextQuestion = () => {
+	const nextQuestion = (event) => {
+		cards[index].status = event.target.id;
 		if (index + 1 === cards.length) {
 			bulkUpdate();
 			setIsFinished(true);
@@ -123,6 +138,8 @@ export default function Quiz(props) {
 					/>
 					<Editor isReadOnly={true} answer={cards[index].answer} />
 					<Button
+						id="correct"
+						value={index}
 						sx={{
 							mt: 3,
 							width: window.innerWidth > 450 ? "20%" : "30%",
@@ -135,6 +152,8 @@ export default function Quiz(props) {
 						Correct
 					</Button>
 					<Button
+						id="wrong"
+						value={index}
 						sx={{
 							ml: window.innerWidth > 450 ? 4.7 : 3,
 							mt: 3,

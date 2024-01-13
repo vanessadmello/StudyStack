@@ -14,15 +14,15 @@ export type User = {
 	_id?: string;
 	user: string;
 	password: string;
-	progress: Array<Answer>;
+	progress?: Array<Answer>;
 	createdAt?: Date;
 	updatedAt?: Date;
 };
 
 export type Answer = {
 	timestamp?: Date;
-	correct: number;
-	incorrect: number;
+	correct: number | Array<number>;
+	incorrect: number | Array<number>;
 };
 
 export type Deck = {

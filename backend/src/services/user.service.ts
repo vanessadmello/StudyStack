@@ -1,5 +1,5 @@
 import UserModel from "../models/user.model";
-import { User } from "../types";
+import { Answer, User } from "../types";
 import logger from "../utils/logger";
 import bcrypt from "bcrypt";
 import config from "config";
@@ -56,4 +56,46 @@ const deleteUser = async (id: string) => {
 	}
 };
 
-export { registerUser, updateUserPassword, deleteUser, validateUser };
+const updateProgressInUser = async (id: string, progressData: any) => {
+	try {
+		var result = await UserModel.findOneAndUpdate(
+			{
+				_id: id,
+				"progress.timestamp": {
+					$eq: new Date().setHours(0, 0, 0, 0),
+				},
+			},
+			{
+				$inc: {
+					"progress.$.correct": progressData.correct,
+					"progress.$.incorrect": progressData.incorrect,
+				},
+			}
+		);
+
+		if (result == null) {
+			await UserModel.findOneAndUpdate(
+				{
+					_id: id,
+				},
+				{
+					$push: {
+						progress: progressData,
+					},
+				}
+			);
+		}
+	} catch (e: any) {
+		logger.error(e.message);
+		throw new Error(e);
+	}
+};
+
+
+export {
+	registerUser,
+	updateUserPassword,
+	deleteUser,
+	validateUser,
+	updateProgressInUser,
+};

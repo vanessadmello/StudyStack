@@ -1,5 +1,5 @@
 import CardModel from "../models/card.model";
-import { Card } from "../types";
+import { Answer, Card } from "../types";
 import logger from "../utils/logger";
 
 const createCard = async (cardInput: Card) => {
@@ -58,9 +58,11 @@ const updateCard = async (id: string, cardInput: Card) => {
 	}
 };
 
-const bulkCardUpdate = async (data: Array<string>) => {
+const bulkCardUpdate = async (data: Answer) => {
 	try {
-		await CardModel.updateMany({ _id: { $in: data } }, [
+		const correctIds = data.correct;
+		const inCorrectIds = data.incorrect;
+		await CardModel.updateMany({ _id: { $in: correctIds } }, [
 			{
 				$set: {
 					spacedAt: new Date(),
@@ -71,6 +73,14 @@ const bulkCardUpdate = async (data: Array<string>) => {
 							else: 30,
 						},
 					},
+				},
+			},
+		]);
+		await CardModel.updateMany({ _id: { $in: inCorrectIds } }, [
+			{
+				$set: {
+					spacedAt: new Date(),
+					spacedRep: 1
 				},
 			},
 		]);

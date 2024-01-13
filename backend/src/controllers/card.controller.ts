@@ -8,6 +8,8 @@ import {
 	bulkCardUpdate,
 } from "../services/card.service";
 import logger from "../utils/logger";
+import { fetchProgress, updateProgressInUser } from "../services/user.service";
+import { Answer } from "../types";
 
 async function createCardHandler(req: Request, res: Response) {
 	try {
@@ -39,7 +41,7 @@ async function getCardsByDeckHandler(req: Request, res: Response) {
 		res.status(409).send(e.message);
 	}
 }
-// TODO updateCardHandler update progress & spaced scenario
+
 async function updateCardHandler(req: Request, res: Response) {
 	try {
 		await updateCard(req.query.id as string, req.body);
@@ -55,7 +57,19 @@ async function updateCardHandler(req: Request, res: Response) {
 
 async function updateAnswerCardHandler(req: Request, res: Response) {
 	try {
-		await bulkCardUpdate(req.body.ids);
+		var answer: Answer = {
+			correct: req.body.correct,
+			incorrect: req.body.correct,
+		};
+		await bulkCardUpdate(answer);
+		const date = new Date();
+		date.setHours(0, 0, 0, 0);
+		answer = {
+			timestamp: date,
+			correct: req.body.correct.length,
+			incorrect: req.body.incorrect.length,
+		};
+		await updateProgressInUser(req.body.userId, answer);
 		res.status(200).send({
 			ids: req.body.ids,
 			message: "Cards Updated Successfully",
