@@ -80,7 +80,7 @@ export default function SaveCard({ isEdit }) {
 						});
 					}
 				})
-				.catch((err) => console.log(err));
+				.catch((err) => console.error(err));
 		} else {
 			createCard(card)
 				.then((res) => {
@@ -98,7 +98,7 @@ export default function SaveCard({ isEdit }) {
 						});
 					}
 				})
-				.catch((err) => console.log(err));
+				.catch((err) => console.error(err));
 		}
 	};
 
@@ -107,7 +107,7 @@ export default function SaveCard({ isEdit }) {
 			.then((res) => {
 				setDecks(res.data);
 			})
-			.catch((err) => console.log(err));
+			.catch((err) => console.error(err));
 	}
 
 	return (

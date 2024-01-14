@@ -37,7 +37,7 @@ export default function Quiz() {
 					setIsFinished(false);
 				}
 			})
-			.catch((err) => console.log(err));
+			.catch((err) => console.error(err));
 	}
 
 	async function bulkUpdate() {
@@ -56,9 +56,8 @@ export default function Quiz() {
 		};
 
 		await bulkUpdateCardQuiz(data)
-			.then(async (res) => {
-			})
-			.catch((err) => console.log(err));
+			.then(async (res) => {})
+			.catch((err) => console.error(err));
 	}
 
 	const flipCardClick = () => {

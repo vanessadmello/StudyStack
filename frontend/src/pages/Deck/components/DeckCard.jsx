@@ -42,7 +42,7 @@ export default function DeckCard() {
 			.then((res) => {
 				setDecks(res.data);
 			})
-			.catch((err) => console.log(err));
+			.catch((err) => console.error(err));
 	}
 
 	useEffect(() => {

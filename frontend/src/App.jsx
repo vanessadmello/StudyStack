@@ -8,6 +8,7 @@ import Quiz from "./pages/Quiz/Quiz";
 import ReviewCards from "./pages/ReviewCards/ReviewCards";
 import Introduction from "./pages/Introduction/Introduction";
 import Authentication from "./pages/Authentication/Authentication";
+import Settings from "./pages/Settings/Settings";
 
 const THEME = createTheme({
 	typography: {
@@ -42,6 +43,7 @@ function App() {
 				<Route path="/quiz" element={<Quiz />} />
 				<Route path="/review" element={<ReviewCards />} />
 				<Route path="/viewCard" element={<SaveCard isEdit={true} />} />
+				<Route path="/settings" element={<Settings />} />
 			</Routes>
 		</ThemeProvider>
 	);

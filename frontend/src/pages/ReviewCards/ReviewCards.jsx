@@ -44,7 +44,7 @@ export default function ReviewCards() {
 				Array.prototype.push.apply(card, res.data.toReview);
 				setCards(card);
 			})
-			.catch((err) => console.log(err));
+			.catch((err) => console.error(err));
 	}
 
 	useEffect(() => {

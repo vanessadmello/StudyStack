@@ -46,4 +46,19 @@ const idCardValidator = [
 	},
 ];
 
+const bulkCardValidator = [
+	query("id")
+		.exists()
+		.withMessage("Id is Required")
+		.isString()
+		.withMessage("Id should be string"),
+
+	(req: Request, res: Response, next: NextFunction) => {
+		const errors = validationResult(req);
+		if (!errors.isEmpty())
+			return res.status(422).json({ errors: errors.array() });
+		next();
+	},
+];
+
 export { cardValidator, idCardValidator };
