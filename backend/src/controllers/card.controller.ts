@@ -71,7 +71,7 @@ async function updateAnswerCardHandler(req: Request, res: Response) {
 		};
 		await updateProgressInUser(req.body.userId, answer);
 		res.status(200).send({
-			ids: req.body.ids,
+			ids: req.body.correct.push(...req.body.incorrect),
 			message: "Cards Updated Successfully",
 		});
 	} catch (e: any) {

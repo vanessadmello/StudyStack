@@ -16,8 +16,14 @@ export const deleteUser = (userId) => {
 	});
 };
 
-export const updateuser = (userId, data) => {
+export const updateUser = (userId, data) => {
 	return axios.put(API_URL + "user", data, {
+		params: { id: userId },
+	});
+};
+
+export const fetchProgress = (userId) => {
+	return axios.get(API_URL + "user/progress", {
 		params: { id: userId },
 	});
 };

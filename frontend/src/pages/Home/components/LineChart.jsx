@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import pink from "@mui/material/colors/pink";
 import Paper from "@mui/material/Paper";
 import Card from "@mui/material/Card";
@@ -13,6 +13,7 @@ import {
 	Legend,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
+import { fetchProgress } from "../../../service/user.service";
 
 ChartJS.register(
 	CategoryScale,
@@ -37,7 +38,7 @@ const options = {
 		},
 		title: {
 			display: true,
-			text: "Your Analysis Last Week",
+			text: "Your Analysis in the Past 7 Days",
 			font: {
 				size: window.innerWidth > 450 ? 18 : 15,
 			},
@@ -46,27 +47,47 @@ const options = {
 	maintainAspectRatio: false,
 };
 
-const labels = ["January", "February", "March", "April", "May", "June"];
-
-const data = {
-	labels,
-	datasets: [
-		{
-			label: "Incorrect",
-			data: [10, 20, 30, 20, 20, 30],
-			borderColor: "rgb(255, 99, 132)",
-			backgroundColor: "rgba(255, 99, 132, 0.5)",
-		},
-		{
-			label: "Correct",
-			data: [0, 8, 10, 30, 10, 40],
-			borderColor: "rgb(53, 162, 235)",
-			backgroundColor: "rgba(53, 162, 235, 0.5)",
-		},
-	],
-};
+const labels = ["Day 1", "Day 2", "Day 3", "Day 4", "Day 5", "Day 6", "Day 7"];
 
 export default function LineChart() {
+
+	const [data, setData] = useState({
+		correct: [],
+		incorrect: []
+	});
+	useEffect(() => {
+		fetchProgressData();
+	}, []);
+
+	const fetchProgressData = () => {
+		fetchProgress(localStorage.getItem("userId"))
+			.then((res) => {
+				setData(res.data.progress);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	};
+
+	const chart = {
+		labels,
+		datasets: [
+			{
+				label: "Incorrect",
+				data: data.incorrect,
+				borderColor: "rgb(255, 99, 132)",
+				backgroundColor: "rgba(255, 99, 132, 0.5)",
+			},
+			{
+				label: "Correct",
+				data: data.correct,
+				borderColor: "rgb(53, 162, 235)",
+				backgroundColor: "rgba(53, 162, 235, 0.5)",
+			},
+		],
+	};
+
+
 	return (
 		<Paper elevation={3} square={false}>
 			<Card
@@ -75,7 +96,7 @@ export default function LineChart() {
 					p: 2,
 				}}
 			>
-				<Line options={options} data={data} height={240} />
+				<Line options={options} data={chart} height={240} />
 			</Card>
 		</Paper>
 	);

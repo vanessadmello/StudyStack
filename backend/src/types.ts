@@ -14,7 +14,7 @@ export type User = {
 	_id?: string;
 	user: string;
 	password: string;
-	progress?: Array<Answer>;
+	progress: Array<Answer>;
 	createdAt?: Date;
 	updatedAt?: Date;
 };

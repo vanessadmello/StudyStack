@@ -54,7 +54,7 @@ const updateUserValidator = [
 	},
 ];
 
-const deleteUserValidator = [
+const idUserValidator = [
 	query("id")
 		.exists()
 		.withMessage("User Id is Required")
@@ -69,4 +69,5 @@ const deleteUserValidator = [
 	},
 ];
 
-export { userValidator, updateUserValidator, deleteUserValidator };
+
+export { userValidator, updateUserValidator, idUserValidator };

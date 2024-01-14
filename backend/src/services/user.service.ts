@@ -91,11 +91,56 @@ const updateProgressInUser = async (id: string, progressData: any) => {
 	}
 };
 
+const fetchProgress = async (id: string) => {
+	try {
+		const user = await UserModel.findOne({
+			_id: id,
+		});
+		var progressData: {
+			correct: any[];
+			incorrect: any[];
+		} = {
+			correct: [],
+			incorrect: [],
+		};
+		if (user) {
+			const today = new Date();
+			today.setHours(0, 0, 0, 0);
+			const progress = user.progress.filter(
+				(value) =>
+					value.timestamp != null &&
+					value.timestamp?.getTime() >=
+						today.getTime() - 7 * 24 * 60 * 60 * 1000
+			);
+
+			for (let i = 0, j = 0; i < 7; i++) {
+				if (
+					j < progress.length &&
+					progress[j].timestamp?.getTime() ==
+						today.getTime() - i * 24 * 60 * 60 * 1000
+				) {
+					progressData.correct.push(progress[j].correct);
+					progressData.incorrect.push(progress[j++].incorrect);
+				} else {
+					progressData.correct.push(0);
+					progressData.incorrect.push(0);
+				}
+			}
+		}
+		progressData.correct.reverse();
+		progressData.incorrect.reverse();
+		return progressData;
+	} catch (e: any) {
+		logger.error(e.message);
+		throw new Error(e);
+	}
+};
 
 export {
 	registerUser,
 	updateUserPassword,
 	deleteUser,
 	validateUser,
+	fetchProgress,
 	updateProgressInUser,
 };

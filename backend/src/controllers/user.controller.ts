@@ -4,6 +4,7 @@ import {
 	deleteUser,
 	updateUserPassword,
 	validateUser,
+	fetchProgress,
 } from "../services/user.service";
 import logger from "../utils/logger";
 import _ from "lodash";
@@ -67,9 +68,23 @@ async function deleteUserHandler(req: Request, res: Response) {
 	}
 }
 
+async function fetchProgressHandler(req: Request, res: Response) {
+	try {
+		const progress = await fetchProgress(req.query.id as string);
+		res.status(200).send({
+			id: req.query.id,
+			progress: progress,
+		});
+	} catch (e: any) {
+		logger.error(e.message);
+		res.status(409).send(e.message);
+	}
+}
+
 export {
 	createUserHandler,
 	loginUserHandler,
 	updateUserPasswordHandler,
 	deleteUserHandler,
+	fetchProgressHandler,
 };
