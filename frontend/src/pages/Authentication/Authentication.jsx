@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import pink from "@mui/material/colors/pink";
 import Grid from "@mui/material/Grid";
@@ -19,7 +19,7 @@ import { loginUser, registerUser } from "../../service/user.service";
 
 export default function Authentication({ isLogin }) {
 	const navigate = useNavigate();
-	const [snackBar, setSnackBar] = React.useState({
+	const [snackBar, setSnackBar] = useState({
 		severity: "success",
 		open: false,
 		message: "",

@@ -38,7 +38,7 @@ export default function SaveCard({ isEdit }) {
 	const [deckSelected, setDeckSelected] = useState(
 		location.state != null ? data.deck[0]._id : ""
 	);
-	const [snackBar, setSnackBar] = React.useState({
+	const [snackBar, setSnackBar] = useState({
 		severity: "success",
 		open: false,
 		message: "",

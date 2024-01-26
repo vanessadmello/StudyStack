@@ -1,5 +1,8 @@
 import axios from "axios";
-const API_URL = process.env.REACT_APP_DEV;
+const API_URL =
+	process.env.REACT_APP_ENV === "PROD"
+		? process.env.REACT_APP_PROD
+		: process.env.REACT_APP_DEV;
 
 export const getDecksByUser = (userId) => {
 	return axios.get(API_URL + "deck/user", {

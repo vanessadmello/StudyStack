@@ -47,7 +47,7 @@ const options = {
 	maintainAspectRatio: false,
 };
 
-const labels = ["Day 1", "Day 2", "Day 3", "Day 4", "Day 5", "Day 6", "Day 7"];
+const labels = ["6 Days Ago", "5 Days Ago", "4 Days Ago", "3 Days Ago", "2 Days Ago", "Yesterday", "Today"];
 
 export default function LineChart() {
 	const [data, setData] = useState({

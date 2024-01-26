@@ -25,7 +25,8 @@ export default function Quiz() {
 		if (location.state === null) {
 			navigate("/decks");
 		}
-	}, []);
+		// eslint-disable-next-line
+	}, [location.state, navigate]);
 
 	async function getCards() {
 		await getCardsByDeck(location.state.deckId)

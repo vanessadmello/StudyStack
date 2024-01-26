@@ -13,21 +13,23 @@ import Typography from "@mui/material/Typography";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import DialogDelete from "./components/DialogDelete";
+import Tooltip from "@mui/material/Tooltip";
 import NavBar from "../../common/NavBar/NavBar";
 import Footer from "../../common/Footer/Footer";
 import { getCardsByDeck } from "../../service/card.service";
+import AddCard from "@mui/icons-material/AddCard";
 
 export default function ReviewCards() {
 	const navigate = useNavigate();
 	const location = useLocation();
 	const [cards, setCards] = useState([]);
 	const [deckName, setDeckName] = useState("");
-	const [snackBar, setSnackbar] = React.useState({
+	const [snackBar, setSnackbar] = useState({
 		severity: "success",
 		open: false,
 		message: "",
 	});
-	const [dialogState, setDialogState] = React.useState({
+	const [dialogState, setDialogState] = useState({
 		state: false,
 		data: {},
 	});
@@ -62,50 +64,69 @@ export default function ReviewCards() {
 			<Container sx={{ flexGrow: 1, mb: 5 }}>
 				<Grid container spacing={2}>
 					<Grid item xs={12} md={12} lg={12}>
-						<Typography
-							sx={{ mt: 4, mb: 2 }}
-							variant="h6"
-							component="div"
-						>
-							{deckName}
-						</Typography>
+						<ListItem>
+							<ListItemText>
+								<Typography
+									sx={{ mt: 3, mb: 0 }}
+									variant="h6"
+									component="div"
+								>
+									{deckName}
+								</Typography>
+							</ListItemText>
+
+							<Tooltip title="Add Card to Deck">
+								<Link
+									to={"/addCard"}
+									
+								>
+									<IconButton aria-label="delete">
+										<AddCard style={{ color: pink[300] }} />
+									</IconButton>
+								</Link>
+							</Tooltip>
+						</ListItem>
 
 						<List>
 							{cards.map((card) => (
 								<ListItem
 									sx={{
 										border: `2px solid ${pink[400]}`,
-										mt: 2,
+										mt: 1,
 									}}
 									key={card._id}
 								>
 									<ListItemText primary={card.question} />
-									<Link
-										to={"/viewCard"}
-										state={{ data: card }}
-									>
-										<IconButton
-											edge="end"
-											aria-label="delete"
+									<Tooltip title="Edit Card">
+										<Link
+											to={"/viewCard"}
+											state={{ data: card }}
 										>
-											<EditIcon
+											<IconButton
+												edge="end"
+												aria-label="delete"
+											>
+												<EditIcon
+													style={{ color: pink[300] }}
+												/>
+											</IconButton>
+										</Link>
+									</Tooltip>
+									<Tooltip title="Delete Card">
+										<IconButton
+											aria-label="delete"
+											onClick={() => {
+												setDialogState({
+													data: card,
+													state: true,
+												});
+											}}
+										>
+											<DeleteIcon
 												style={{ color: pink[300] }}
 											/>
 										</IconButton>
-									</Link>
-									<IconButton
-										aria-label="delete"
-										onClick={() => {
-											setDialogState({
-												data: card,
-												state: true,
-											});
-										}}
-									>
-										<DeleteIcon
-											style={{ color: pink[300] }}
-										/>
-									</IconButton>
+									</Tooltip>
 								</ListItem>
 							))}
 						</List>

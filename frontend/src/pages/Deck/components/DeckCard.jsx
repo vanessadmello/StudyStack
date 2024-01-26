@@ -14,6 +14,7 @@ import FactCheckIcon from "@mui/icons-material/FactCheck";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import TableInfo from "./TableInfo";
+import Tooltip from "@mui/material/Tooltip";
 import DeckDialog from "../../../common/DeckDialog/DeckDialog";
 import { getDecksByUser } from "../../../service/deck.service";
 
@@ -26,7 +27,7 @@ export default function DeckCard() {
 		isEdit: false,
 		state: false,
 	});
-	const [snackBar, setSnackBar] = React.useState({
+	const [snackBar, setSnackBar] = useState({
 		severity: "success",
 		open: false,
 		message: "",
@@ -56,7 +57,7 @@ export default function DeckCard() {
 				spacing={window.innerWidth > 850 ? 3.5 : 2}
 				sx={{
 					mx: 2,
-					mb: 3,
+					mb: 5,
 					display: { xs: "flex" },
 				}}
 			>
@@ -72,42 +73,46 @@ export default function DeckCard() {
 						<Paper
 							elevation={3}
 							square={false}
-							sx={{ mb: 3, border: `2.5px solid ${pink[400]}` }}
+							sx={{ mb: 2, border: `2.5px solid ${pink[400]}` }}
 						>
 							<div>
 								<Grid container justifyContent="flex-end">
-									<IconButton
-										edge="start"
-										aria-label="edit"
-										value={deck}
-										onClick={() => {
-											setDialogState({
-												data: deck,
-												isEdit: true,
-												state: true,
-											});
-										}}
-									>
-										<EditIcon
-											style={{ color: pink[300] }}
-										/>
-									</IconButton>
-									<IconButton
-										edge="start"
-										aria-label="delete"
-										value={deck}
-										onClick={() => {
-											setDialogState({
-												data: deck,
-												isEdit: false,
-												state: true,
-											});
-										}}
-									>
-										<DeleteIcon
-											style={{ color: pink[300] }}
-										/>
-									</IconButton>
+									<Tooltip title="Edit Deck">
+										<IconButton
+											edge="start"
+											aria-label="edit"
+											value={deck}
+											onClick={() => {
+												setDialogState({
+													data: deck,
+													isEdit: true,
+													state: true,
+												});
+											}}
+										>
+											<EditIcon
+												style={{ color: pink[300] }}
+											/>
+										</IconButton>
+									</Tooltip>
+									<Tooltip title="Delete Deck">
+										<IconButton
+											edge="start"
+											aria-label="delete"
+											value={deck}
+											onClick={() => {
+												setDialogState({
+													data: deck,
+													isEdit: false,
+													state: true,
+												});
+											}}
+										>
+											<DeleteIcon
+												style={{ color: pink[300] }}
+											/>
+										</IconButton>
+									</Tooltip>
 								</Grid>
 								<Typography
 									sx={{

@@ -23,7 +23,7 @@ export default function AddCard({ isCard }) {
 		isCreate: true,
 		state: false,
 	});
-	const [snackBar, setSnackBar] = React.useState({
+	const [snackBar, setSnackBar] = useState({
 		severity: "success",
 		open: false,
 		message: "",
