@@ -7,7 +7,6 @@ import {
 	fetchProgress,
 } from "../services/user.service";
 import logger from "../utils/logger";
-import _ from "lodash";
 import { createDeck } from "../services/deck.service";
 import { Deck } from "../types";
 

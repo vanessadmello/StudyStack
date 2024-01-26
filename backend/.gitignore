@@ -16,13 +16,10 @@ results
 tmp
 
 # Build
-public/css/main.css
+build/
 
 # Coverage reports
 coverage
-
-#env data
-config
 
 # API keys and secrets
 .env

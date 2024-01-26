@@ -1,12 +1,13 @@
 import mongoose from "mongoose";
-import config from "config";
+import * as dotenv from "dotenv";
 import logger from "./logger";
+dotenv.config();
 
 const connectionDb = async () => {
-	const production: boolean = config.get<boolean>("production");
-	const dbURL: string = production
-		? config.get<string>("dbURLProd")
-		: config.get<string>("dbURLDev");
+	const environment: string = process.env.ENV as string;
+	const dbURL: string = (
+		environment === "PROD" ? process.env.DBURLPROD : process.env.DBURLDEV
+	) as string;
 	try {
 		await mongoose.connect(dbURL);
 		logger.info("Connected to MongoDB Successfully");

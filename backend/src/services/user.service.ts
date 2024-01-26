@@ -2,23 +2,27 @@ import UserModel from "../models/user.model";
 import { Answer, User } from "../types";
 import logger from "../utils/logger";
 import bcrypt from "bcrypt";
-import config from "config";
+import * as dotenv from "dotenv";
 import { omit } from "lodash";
 import { deleteCardByUser } from "./card.service";
 import { deleteDeckByUser } from "./deck.service";
 
+dotenv.config();
+
 const registerUser = async (userInput: User) => {
 	try {
-		const hash = bcrypt.hashSync(
-			userInput.password,
-			config.get<number>("salt")
-		);
+		const salt: number = Number(process.env.SALT);
+		const hash = bcrypt.hashSync(userInput.password, salt);
 		userInput.password = hash;
 		const user = await UserModel.create<User>(userInput);
 		return omit(user.toJSON(), "password");
 	} catch (e: any) {
 		logger.error(e.message);
-		throw new Error(e);
+		if (e.code === 11000) {
+			throw new Error("Username Exists. Please try another");
+		} else {
+			throw new Error("Unable to register the user");
+		}
 	}
 };
 
@@ -37,7 +41,8 @@ const validateUser = async (username: string, password: string) => {
 
 const updateUserPassword = async (id: string, password: string) => {
 	try {
-		const hash = bcrypt.hashSync(password, config.get<number>("salt"));
+		const salt: number = Number(process.env.SALT);
+		const hash = bcrypt.hashSync(password, salt);
 		await UserModel.findOneAndUpdate({ _id: id }, { password: hash });
 	} catch (e: any) {
 		logger.error(e.message);

@@ -47,12 +47,21 @@ const idCardValidator = [
 ];
 
 const bulkCardValidator = [
-	query("id")
+	body("userId")
 		.exists()
-		.withMessage("Id is Required")
+		.withMessage("User Id is Required")
 		.isString()
-		.withMessage("Id should be string"),
-
+		.withMessage("User Id should be string"),
+	body("correct")
+		.exists()
+		.withMessage("Correct is Required")
+		.isArray({ min: 0 })
+		.withMessage("Correct Cannot be Empty"),
+	body("incorrect")
+		.exists()
+		.withMessage("Incorrect is Required")
+		.isArray({ min: 0 })
+		.withMessage("Incorrect Cannot be Empty"),
 	(req: Request, res: Response, next: NextFunction) => {
 		const errors = validationResult(req);
 		if (!errors.isEmpty())
@@ -61,4 +70,4 @@ const bulkCardValidator = [
 	},
 ];
 
-export { cardValidator, idCardValidator };
+export { cardValidator, idCardValidator, bulkCardValidator };
