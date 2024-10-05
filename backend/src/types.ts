@@ -15,14 +15,15 @@ export type User = {
 	user: string;
 	password: string;
 	progress: Array<Answer>;
+	chatIds: Array<string>;
 	createdAt?: Date;
 	updatedAt?: Date;
 };
 
 export type Answer = {
 	timestamp?: Date;
-	correct: number | Array<number>;
-	incorrect: number | Array<number>;
+	correct: number;
+	incorrect: number;
 };
 
 export type Deck = {
@@ -31,4 +32,21 @@ export type Deck = {
 	name: string;
 	toReview?: number;
 	reviewed?: number;
+};
+
+export type Chat = {
+	_id: string;
+	name: string;
+	adminId: string
+	userIds: Array<string>;
+	messages: Array<Message>;
+	createdAt?: Date;
+	updatedAt?: Date;
+};
+
+export type Message = {
+	_id?: string;
+	content: string;
+	userId: string;
+	timestamp?: Date;
 };
