@@ -102,15 +102,23 @@ const fetchProgress = async (id: string) => {
 			_id: id,
 		});
 		var progressData: {
-			correct: any[];
-			incorrect: any[];
+			correct: number[];
+			incorrect: number[];
 		} = {
-			correct: [],
-			incorrect: [],
+			correct: [0, 0, 0, 0, 0, 0, 0],
+			incorrect: [0, 0, 0, 0, 0, 0, 0],
 		};
 		if (user) {
-			const today = new Date();
-			today.setHours(0, 0, 0, 0);
+			var now = new Date();
+			var month =
+				(now.getUTCMonth() + 1 < 10 ? `0` : ``) +
+				(now.getUTCMonth() + 1);
+			var day = (now.getUTCDate() < 10 ? `0` : ``) + now.getUTCDate();
+
+			var today = new Date(
+				`${now.getUTCFullYear()}-${month}-${day}T00:00:00.000+00:00`
+			);
+
 			const progress = user.progress.filter(
 				(value) =>
 					value.timestamp != null &&
@@ -118,17 +126,13 @@ const fetchProgress = async (id: string) => {
 						today.getTime() - 7 * 24 * 60 * 60 * 1000
 			);
 
-			for (let i = 0, j = 0; i < 7; i++) {
+			for (let j = 0, i = 6; j < progress.length && i >= 0; i--) {
 				if (
-					j < progress.length &&
 					progress[j].timestamp?.getTime() ==
-						today.getTime() - i * 24 * 60 * 60 * 1000
+					today.getTime() - i * 24 * 60 * 60 * 1000
 				) {
-					progressData.correct.push(progress[j].correct);
-					progressData.incorrect.push(progress[j++].incorrect);
-				} else {
-					progressData.correct.push(0);
-					progressData.incorrect.push(0);
+					progressData.correct[i] = progress[j].correct;
+					progressData.incorrect[i] = progress[j++].incorrect;
 				}
 			}
 		}
