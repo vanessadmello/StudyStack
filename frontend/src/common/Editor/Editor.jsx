@@ -55,7 +55,7 @@ export default function Editor({ isReadOnly, answer, onChange }) {
 		<ReactQuill
 			defaultValue={answer}
 			placeholder="Enter Your Answer"
-			style={{ height: "260px" }}
+			style={{ height: "350px" }}
 			onChange={onChange}
 			theme="snow"
 			modules={modules}

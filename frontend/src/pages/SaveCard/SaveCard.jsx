@@ -46,7 +46,8 @@ export default function SaveCard({ isEdit }) {
 
 	const handleClose = () => {
 		setSnackBar({ ...snackBar, open: false });
-		navigate("/decks");
+		if (isEdit) navigate("/decks");
+		else navigate(0);
 	};
 	const handleChangeOnAnswer = (content, delta, source, editor) => {
 		const contentJson = editor.getContents();
@@ -123,6 +124,7 @@ export default function SaveCard({ isEdit }) {
 			>
 				<TextField
 					id="outlined-basic"
+					multiline
 					sx={{
 						mb: 2,
 						width: "100%",
@@ -189,7 +191,7 @@ export default function SaveCard({ isEdit }) {
 				<Snackbar
 					anchorOrigin={{ vertical: "top", horizontal: "right" }}
 					open={snackBar.open}
-					autoHideDuration={2000}
+					autoHideDuration={1000}
 					onClose={handleClose}
 				>
 					<MuiAlert

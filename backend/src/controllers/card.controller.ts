@@ -5,7 +5,7 @@ import {
 	getCardsByUser,
 	getCardsByDeck,
 	updateCard,
-	bulkCardUpdate,
+	cardUpdateQuiz,
 } from "../services/card.service";
 import logger from "../utils/logger";
 import { fetchProgress, updateProgressInUser } from "../services/user.service";
@@ -59,9 +59,9 @@ async function updateAnswerCardHandler(req: Request, res: Response) {
 	try {
 		var answer: Answer = {
 			correct: req.body.correct,
-			incorrect: req.body.correct,
+			incorrect: req.body.incorrect,
 		};
-		await bulkCardUpdate(answer);
+		await cardUpdateQuiz(answer);
 		const date = new Date();
 		date.setHours(0, 0, 0, 0);
 		answer = {

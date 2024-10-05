@@ -58,7 +58,7 @@ const updateCard = async (id: string, cardInput: Card) => {
 	}
 };
 
-const bulkCardUpdate = async (data: Answer) => {
+const cardUpdateQuiz = async (data: Answer) => {
 	try {
 		const correctIds = data.correct;
 		const inCorrectIds = data.incorrect;
@@ -138,7 +138,7 @@ export {
 	getCardsByUser,
 	updateCard,
 	deleteCard,
-	bulkCardUpdate,
+	cardUpdateQuiz,
 	getCardsByDeckNoPopulate,
 	deleteCardByUser,
 };

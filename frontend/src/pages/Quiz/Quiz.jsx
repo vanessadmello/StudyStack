@@ -9,7 +9,7 @@ import NavBar from "../../common/NavBar/NavBar";
 import Editor from "../../common/Editor/Editor";
 import Footer from "../../common/Footer/Footer";
 import IconTextContainer from "./components/IconTextContainer";
-import { getCardsByDeck, bulkUpdateCardQuiz } from "../../service/card.service";
+import { getCardsByDeck, updateCardQuiz } from "../../service/card.service";
 
 export default function Quiz() {
 	const navigate = useNavigate();
@@ -41,14 +41,14 @@ export default function Quiz() {
 			.catch((err) => console.error(err));
 	}
 
-	async function bulkUpdate() {
-		const correctIds = cards
-			.filter((card) => card.status === "correct")
-			.map((card) => card._id);
-
-		const incorrectIds = cards
-			.filter((card) => card.status === "wrong")
-			.map((card) => card._id);
+	async function updateCardAnswered(cardAnswered) {
+		const correctIds = [];
+		const incorrectIds = [];
+		if (cardAnswered.status === "correct") {
+			correctIds.push(cardAnswered._id);
+		}else {
+			incorrectIds.push(cardAnswered._id);
+		}
 
 		const data = {
 			userId: localStorage.getItem("userId"),
@@ -56,8 +56,10 @@ export default function Quiz() {
 			incorrect: incorrectIds,
 		};
 
-		await bulkUpdateCardQuiz(data)
-			.then(async (res) => {})
+		await updateCardQuiz(data)
+			.then(async (res) => {
+				console.log(res);
+			})
 			.catch((err) => console.error(err));
 	}
 
@@ -65,15 +67,15 @@ export default function Quiz() {
 		setIsReview(false);
 	};
 
-	const nextQuestion = (event) => {
+	const nextQuestion = async (event) => {
 		cards[index].status = event.target.id;
 		if (index + 1 === cards.length) {
-			bulkUpdate();
 			setIsFinished(true);
 		} else {
 			setIndex(index + 1);
 			setIsReview(true);
 		}
+		await updateCardAnswered(cards[index]);
 	};
 
 	return (

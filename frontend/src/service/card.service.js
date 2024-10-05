@@ -25,7 +25,7 @@ export const createCard = (data) => {
 	return axios.post(API_URL + "card", data);
 };
 
-export const bulkUpdateCardQuiz = (data) => {
+export const updateCardQuiz = (data) => {
 	return axios.post(API_URL + "bulkcard", data);
 };
 
