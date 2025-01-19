@@ -21,6 +21,10 @@ const userSchema = new mongoose.Schema(
 				},
 			],
 		},
+		chatIds: {
+			type: [Schema.Types.ObjectId],
+			required: true,
+		},
 	},
 	{
 		timestamps: true,

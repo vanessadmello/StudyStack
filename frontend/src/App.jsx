@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import pink from "@mui/material/colors/pink";
+import io from "socket.io-client"
 import Home from "./pages/Home/Home";
 import Deck from "./pages/Deck/Deck";
 import SaveCard from "./pages/SaveCard/SaveCard";
@@ -8,6 +9,16 @@ import Quiz from "./pages/Quiz/Quiz";
 import ReviewCards from "./pages/ReviewCards/ReviewCards";
 import Introduction from "./pages/Introduction/Introduction";
 import Authentication from "./pages/Authentication/Authentication";
+import Chat from "./pages/ChatRoom/Chat"
+
+export const socket = io('ws://localhost:5000', {
+	ackTimeout: 10000,
+	retries: 3,
+});
+
+socket.on('connect', () => {
+	console.log('WebSocket connected');
+});
 
 
 const THEME = createTheme({
@@ -28,7 +39,7 @@ function App() {
 	return (
 		<ThemeProvider theme={THEME}>
 			<Routes>
-				<Route path="/" element={<Introduction />} />
+				<Route path="/" element={<Chat />} />
 				<Route
 					path="/login"
 					element={<Authentication isLogin={true} />}
